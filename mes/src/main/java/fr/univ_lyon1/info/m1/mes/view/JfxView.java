@@ -57,7 +57,7 @@ public class JfxView {
 
     private void createPatientsWidget() {
         patients.getChildren().clear();        
-            for (Patient p : mes.getPatients()) {
+        for (Patient p : mes.getPatients()) {
             final PatientView hpv = new PatientView(p);
             patients.getChildren().add(hpv.asPane());
         }
@@ -71,9 +71,11 @@ public class JfxView {
                 new HBox(ssIDL, ssIDT),
                 newP);
         newP.setOnAction(new EventHandler<ActionEvent>() {
+            final MES localMES = mes;
             @Override
             public void handle(final ActionEvent event) {
-                EasyAlert.alert("Action not implemented yet.");
+                localMES.createPatient(nameT.getText(), ssIDT.getText());
+                createPatientsWidget();
             }
         });
     }

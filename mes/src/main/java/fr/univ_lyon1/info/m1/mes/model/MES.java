@@ -39,6 +39,7 @@ public class MES {
         createPatient("Charles Boz", "102020212345678");
         final HealthProfessional w = new HealthProfessional("Dr. Who", this);
         final HealthProfessional s = new Dentist("Dr. Strange", this);
+        final Pediatrician p = new Pediatrician("Dr. Epstein", this);
         new Homeopath("Dr. Hahnemann", this);
         a.addPrescription(w, "One apple a day");
         a.addPrescription(w, "Sport twice a week");

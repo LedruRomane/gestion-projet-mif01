@@ -1,6 +1,5 @@
 package fr.univ_lyon1.info.m1.mes.view;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import fr.univ_lyon1.info.m1.mes.model.Dentist;
@@ -25,7 +24,7 @@ public class HealthProfessionalView {
     private String selectedPatientSSID;
     private final VBox prescriptions = new VBox();
 
-        public HealthProfessionalView(final HealthProfessional hp) {
+    public HealthProfessionalView(final HealthProfessional hp) {
         pane.setStyle("-fx-border-color: gray;\n"
                 + "-fx-border-insets: 5;\n"
                 + "-fx-padding: 5;\n"
@@ -81,7 +80,7 @@ public class HealthProfessionalView {
         } else if (hp instanceof Homeopath) {
             predefPrescr.add("Natrum Muriaticum 30CH");
             predefPrescr.add("Sucre 200K");
-        } else if (hp instanceof Pediatrician){
+        } else if (hp instanceof Pediatrician) {
             predefPrescr.add("Less fastfood");
         }
         for (final String p : predefPrescr) {
@@ -97,15 +96,15 @@ public class HealthProfessionalView {
         tp.setOnAction(prescriptionHandler);
         bp.setOnAction(prescriptionHandler);
     }
-    
+
     void prescribe(final String prescription) {
         if (selectedPatientSSID == null) {
             EasyAlert.alert("Please select a patient first");
             return;
         }
         healthProfessional
-            .getPatient(selectedPatientSSID)
-            .addPrescription(healthProfessional, prescription);
+                .getPatient(selectedPatientSSID)
+                .addPrescription(healthProfessional, prescription);
         showPrescriptions();
     }
 
@@ -114,11 +113,11 @@ public class HealthProfessionalView {
         Patient p = healthProfessional.getPatient(selectedPatientSSID);
         if (p == null) {
             prescriptions.getChildren().add(new Label(
-                "Use search above to see prescriptions"));
+                    "Use search above to see prescriptions"));
             return;
         }
         prescriptions.getChildren().add(new Label(
-            "Prescriptions for " + p.getName()));
+                "Prescriptions for " + p.getName()));
         for (final Prescription pr : p.getPrescriptions(healthProfessional)) {
             final HBox pView = new HBox();
             final Label content = new Label(
@@ -131,7 +130,7 @@ public class HealthProfessionalView {
                     pView.getChildren().remove(content);
                     pView.getChildren().remove(removeBtn);
                 }
-                
+
             });
             pView.getChildren().addAll(content, removeBtn);
             prescriptions.getChildren().add(pView);

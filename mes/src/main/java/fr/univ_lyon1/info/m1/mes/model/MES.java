@@ -5,33 +5,59 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class MES {
+
+    /**
+     * Attributes
+     */
     private final List<HealthProfessional> healthProfessionals = new ArrayList<>();
-    
     private final Map<String, Patient> registry = new HashMap<>();
 
+    /**
+     * Constructor
+     * 
+     * @return
+     */
+    public List<HealthProfessional> getHealthProfessional() {
+        return healthProfessionals;
+    }
+
+    /**
+     * @param ssID
+     * @return Patient
+     */
     public Patient getPatient(final String ssID) {
         return registry.get(ssID);
     }
 
+    /**
+     * @param name
+     * @param ssID
+     * @return Patient
+     */
     public Patient createPatient(final String name, final String ssID) {
         final Patient p = new Patient(name, ssID);
         registry.put(ssID, p);
         return p;
     }
 
+    /**
+     * @param hp
+     */
     public void addHealthProfessional(final HealthProfessional hp) {
         healthProfessionals.add(hp);
     };
-    
+
+    /**
+     * @return List<Patient>
+     */
     public List<Patient> getPatients() {
         return new ArrayList<>(registry.values());
     }
 
-    public List<HealthProfessional> getHealthProfessional() {
-        return healthProfessionals;
-    }
+    /**
+     * @return List<HealthProfessional>
+     */
 
     public void createExampleConfiguration() {
         final Patient a = createPatient("Alice Foo", "299010212345678");

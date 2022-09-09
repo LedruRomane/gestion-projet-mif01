@@ -46,6 +46,10 @@ public class JfxView {
         stage.show();
     }
 
+    
+    /** 
+     * @return Pane
+     */
     private Pane createHPWidget() {
         for (HealthProfessional p : mes.getHealthProfessional()) {
             HealthProfessionalView hpv = new HealthProfessionalView(p);

@@ -48,6 +48,10 @@ public class PatientView {
         }
     }
 
+    
+    /** 
+     * @return Pane
+     */
     public Pane asPane() {
         return pane;
     }

@@ -97,6 +97,10 @@ public class HealthProfessionalView {
         bp.setOnAction(prescriptionHandler);
     }
 
+    
+    /** 
+     * @param prescription
+     */
     void prescribe(final String prescription) {
         if (selectedPatientSSID == null) {
             EasyAlert.alert("Please select a patient first");
@@ -137,6 +141,10 @@ public class HealthProfessionalView {
         }
     }
 
+    
+    /** 
+     * @return Pane
+     */
     public Pane asPane() {
         return pane;
     }

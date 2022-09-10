@@ -6,14 +6,14 @@ import java.util.stream.Collectors;
 
 public class Patient {
 
-    /**
+    /*
      * Attributes
      */
     private final List<Prescription> prescriptions = new ArrayList<>();
     private final String name;
     private final String ssID;
 
-    /**
+    /*
      * Contructor
      * 
      * @param name

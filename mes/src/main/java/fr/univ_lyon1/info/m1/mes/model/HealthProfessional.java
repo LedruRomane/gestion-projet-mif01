@@ -4,13 +4,13 @@ import java.util.List;
 
 public class HealthProfessional {
 
-    /**
+    /*
      * Attributes
      */
     private final String name;
     private final MES mes;
 
-    /**
+    /*
      * Constructor
      * 
      * @param name

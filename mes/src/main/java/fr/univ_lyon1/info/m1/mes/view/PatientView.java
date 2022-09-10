@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class PatientView {
+    
     private final Pane pane = new VBox();
     private final Patient patient;
     private Pane prescriptionPane = new VBox();

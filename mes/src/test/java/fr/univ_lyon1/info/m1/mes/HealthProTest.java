@@ -14,14 +14,14 @@ import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
 
 public class HealthProTest {
-    MES model = new MES();
+    private MES model = new MES();
 
     @Test
-    /**
+    /*
      * A simple test, purposely broken so that students can see what happens for
      * test failures.
      */
-    public void HealthProfessionalName() {
+    public void healthProfessionalNameTest() {
         // Given
         HealthProfessional hp = new HealthProfessional("Dr. Smith", model);
 
@@ -33,10 +33,10 @@ public class HealthProTest {
     }
 
     @Test
-    /**
+    /*
      * Test addPrescription, and demonstrate advanced Hamcrest assertions.
      */
-    public void GetPrescriptionTest() {
+    public void getPrescriptionTest() {
         // Given
         HealthProfessional hp = new HealthProfessional("Dr. Smith", model);
         Patient p = model.createPatient("Alice", "20123456789012");
@@ -51,12 +51,12 @@ public class HealthProTest {
     }
 
     @Test
-    /**
+    /*
      * Not-so-relevant test, mostly another example of advanced assertion. More
      * relevant things to test: play with several Patients, check that a
      * prescription made for one patient doesn't apply to the other, etc.
      */
-    public void GetNotPrescriptionTest() {
+    public void getNotPrescriptionTest() {
         // Given
         HealthProfessional hp = new HealthProfessional("Dr. Smith", model);
         Patient p = model.createPatient("Alice", "20123456789012");

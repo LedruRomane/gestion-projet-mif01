@@ -7,13 +7,13 @@ import java.util.Map;
 
 public class MES {
 
-    /**
+    /*
      * Attributes
      */
     private final List<HealthProfessional> healthProfessionals = new ArrayList<>();
     private final Map<String, Patient> registry = new HashMap<>();
 
-    /**
+    /*
      * Constructor
      * 
      * @return
@@ -55,7 +55,7 @@ public class MES {
         return new ArrayList<>(registry.values());
     }
 
-    /**
+    /*
      * @return List<HealthProfessional>
      */
 
@@ -65,12 +65,13 @@ public class MES {
         createPatient("Charles Boz", "102020212345678");
         final HealthProfessional w = new HealthProfessional("Dr. Who", this);
         final HealthProfessional s = new Dentist("Dr. Strange", this);
-        final Pediatrician p = new Pediatrician("Dr. Epstein", this);
+        final HealthProfessional p = new Pediatrician("Dr. Epstein", this);
         new Homeopath("Dr. Hahnemann", this);
         a.addPrescription(w, "One apple a day");
         a.addPrescription(w, "Sport twice a week");
         b.addPrescription(w, "Whatever placebo, you're not sick");
         b.addPrescription(s, "Snake oil");
+        b.addPrescription(p, "Snake oil");
 
     }
 }

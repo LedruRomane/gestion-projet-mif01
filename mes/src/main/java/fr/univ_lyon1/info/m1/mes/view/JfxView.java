@@ -1,6 +1,10 @@
 package fr.univ_lyon1.info.m1.mes.view;
 
 import fr.univ_lyon1.info.m1.mes.model.Patient;
+
+import fr.univ_lyon1.info.m1.mes.controller.HealthProfessionalController;
+import fr.univ_lyon1.info.m1.mes.controller.MainController;
+import fr.univ_lyon1.info.m1.mes.controller.PatientController;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.model.MES;
 import javafx.event.ActionEvent;
@@ -19,14 +23,20 @@ public class JfxView {
     
     private Pane patients = new VBox();
     private Pane healthPro = new VBox();
+
     private final MES mes;
+    private final MainController mainController;
 
     /**
      * Create the main view of the application.
      */
     public JfxView(final MES mes, final Stage stage,
+            final MainController mainController, 
+            final HealthProfessionalController healthProfessionalController,
+            final PatientController patientController,
             final int width, final int height) {
         this.mes = mes;
+        this.mainController = mainController;
         // Name of window
         stage.setTitle("Mon Espace Santé");
 
@@ -76,9 +86,11 @@ public class JfxView {
                 newP);
         newP.setOnAction(new EventHandler<ActionEvent>() {
             private final MES localMES = mes;
+            private final MainController mainController = JfxView.this.mainController;
 
             @Override
             public void handle(final ActionEvent event) {
+                mainController.onClickButton();
                 localMES.createPatient(nameT.getText(), ssIDT.getText());
                 createPatientsWidget();
             }

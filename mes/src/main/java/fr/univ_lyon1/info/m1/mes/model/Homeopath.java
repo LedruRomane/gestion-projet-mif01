@@ -2,13 +2,12 @@ package fr.univ_lyon1.info.m1.mes.model;
 
 public class Homeopath extends HealthProfessional {
 
-    /*
-     * Constructor
+    /**
+     * Homeopath Constructor.
      * 
      * @param name
-     * @param mes
      */
-    public Homeopath(final String name, final MES mes) {
-        super(name, mes);
+    public Homeopath(final String name) {
+        super(name);
     }
 }

@@ -106,15 +106,16 @@ public class HealthProfessionalView {
             EasyAlert.alert("Please select a patient first");
             return;
         }
-        healthProfessional
+      /*   healthProfessional
                 .getPatient(selectedPatientSSID)
                 .addPrescription(healthProfessional, prescription);
+                */
         showPrescriptions();
     }
 
     void showPrescriptions() {
         prescriptions.getChildren().clear();
-        Patient p = healthProfessional.getPatient(selectedPatientSSID);
+        Patient p = null;
         if (p == null) {
             prescriptions.getChildren().add(new Label(
                     "Use search above to see prescriptions"));

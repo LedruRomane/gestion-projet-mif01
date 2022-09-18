@@ -1,59 +1,28 @@
 package fr.univ_lyon1.info.m1.mes.view;
 
-import fr.univ_lyon1.info.m1.mes.model.Patient;
-import fr.univ_lyon1.info.m1.mes.model.Prescription;
-import fr.univ_lyon1.info.m1.mes.utils.EasyClipboard;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import fr.univ_lyon1.info.m1.mes.controller.PatientController;
+import fr.univ_lyon1.info.m1.mes.view.component.PatientComponent.PatientBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
 public class PatientView {
-    
-    private final Pane pane = new VBox();
-    private Pane prescriptionPane = new VBox();
-    private final Patient patient;
 
-    public PatientView(final Patient p) {
+    private final PatientController controller;
+    private final PatientBox patientBox;
+    private final Pane pane = new HBox();
 
-        this.patient = p;
-        final HBox nameBox = new HBox();
+    public PatientView(final PatientController c) {
+
+        this.controller = c;
+        this.patientBox = new PatientBox(c);
+        
+        this.pane.getChildren().add(patientBox.asPane());
 
         pane.setStyle("-fx-border-color: gray;\n"
                 + "-fx-border-insets: 5;\n"
                 + "-fx-padding: 5;\n"
                 + "-fx-border-width: 1;\n");
-
-        final Label patientNameLabel = new Label(patient.getName());
-        final Button bSSID = new Button("📋");
-        Button bReload = new Button("🗘");
-        
-        nameBox.getChildren().addAll(patientNameLabel, bSSID, bReload);
-        pane.getChildren().addAll(nameBox, prescriptionPane);
-
-        bSSID.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(final ActionEvent event) {
-                EasyClipboard.copy(patient.getSSID());
-            }
-        });
-        bReload.setOnAction(ActionEvent -> showPrescriptions());       
-        showPrescriptions();
     }
-
-    void showPrescriptions() {
-        prescriptionPane.getChildren().clear();
-        prescriptionPane.getChildren().add(new Label("Prescriptions:\n"));
-        for (final Prescription pr : patient.getPrescriptions()) {
-            prescriptionPane.getChildren().add(new Label("- From "
-                    + pr.getHealthProfessional().getName()
-                    + ": " + pr.getContent()));
-        }
-    }
-
     
     /** 
      * @return Pane

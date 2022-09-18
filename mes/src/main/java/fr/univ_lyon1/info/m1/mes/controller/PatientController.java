@@ -10,7 +10,7 @@ public class PatientController {
 
     public PatientController(final MES mes) {
         this.model = mes;
-        this.view = new PatientView(new Patient("test", "1"));
+        this.view = new PatientView(this);
     }
 
     public PatientView getView() {

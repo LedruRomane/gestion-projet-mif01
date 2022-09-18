@@ -14,28 +14,33 @@ import javafx.scene.layout.VBox;
 public class PatientView {
     
     private final Pane pane = new VBox();
-    private final Patient patient;
     private Pane prescriptionPane = new VBox();
+    private final Patient patient;
 
     public PatientView(final Patient p) {
+
         this.patient = p;
+        final HBox nameBox = new HBox();
+
         pane.setStyle("-fx-border-color: gray;\n"
                 + "-fx-border-insets: 5;\n"
                 + "-fx-padding: 5;\n"
                 + "-fx-border-width: 1;\n");
-        final Label l = new Label(p.getName());
+
+        final Label patientNameLabel = new Label(patient.getName());
         final Button bSSID = new Button("📋");
+        Button bReload = new Button("🗘");
+        
+        nameBox.getChildren().addAll(patientNameLabel, bSSID, bReload);
+        pane.getChildren().addAll(nameBox, prescriptionPane);
+
         bSSID.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent event) {
-                EasyClipboard.copy(p.getSSID());
+                EasyClipboard.copy(patient.getSSID());
             }
         });
-        Button bReload = new Button("🗘");
-        bReload.setOnAction(ActionEvent -> showPrescriptions());
-        final HBox nameBox = new HBox();
-        nameBox.getChildren().addAll(l, bSSID, bReload);
-        pane.getChildren().addAll(nameBox, prescriptionPane);
+        bReload.setOnAction(ActionEvent -> showPrescriptions());       
         showPrescriptions();
     }
 

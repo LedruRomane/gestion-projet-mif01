@@ -19,24 +19,41 @@ import javafx.scene.layout.VBox;
 
 public class HealthProfessionalView {
     private final VBox pane = new VBox();
+    private final VBox prescriptions = new VBox();
     private HealthProfessional healthProfessional;
     private String selectedPatientSSID;
-    private final VBox prescriptions = new VBox();
 
     public HealthProfessionalView(final HealthProfessional hp) {
+
+        this.healthProfessional = hp;
+        final HealthProfessionalView parent = this;
+
         pane.setStyle("-fx-border-color: gray;\n"
                 + "-fx-border-insets: 5;\n"
                 + "-fx-padding: 5;\n"
                 + "-fx-border-width: 1;\n");
-        this.healthProfessional = hp;
-        final Label l = new Label(hp.getName());
-        pane.getChildren().add(l);
-        final HBox search = new HBox();
+
+        final HBox searchBox = new HBox();
+        final HBox addPrescriptionBox = new HBox();
+
+        final Label hpNameLabel = new Label(hp.getName());
+        final Label prescriveLabel = new Label("Prescibe");
         final TextField t = new TextField();
-        final Button b = new Button("Search");
-        search.getChildren().addAll(t, b);
-        pane.getChildren().addAll(search, prescriptions);
-        final EventHandler<ActionEvent> ssHandler = new EventHandler<ActionEvent>() {
+        final TextField prescriptionTextField = new TextField();
+        final Button searchButton = new Button("Search");
+        final Button addButton = new Button("Add");
+        
+        searchBox.getChildren().addAll(t, searchButton);
+        addPrescriptionBox.getChildren().addAll(prescriptionTextField, addButton);
+        pane.getChildren().addAll(hpNameLabel,
+                                prescriveLabel, 
+                                searchBox, 
+                                prescriptions,
+                                addPrescriptionBox);
+
+        
+
+        final EventHandler<ActionEvent> searchPatientHandler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent event) {
                 final String text = t.getText().trim();
@@ -49,28 +66,22 @@ public class HealthProfessionalView {
                 t.requestFocus();
             }
         };
-        b.setOnAction(ssHandler);
-        t.setOnAction(ssHandler);
+        addButton.setOnAction(searchPatientHandler);
+        t.setOnAction(searchPatientHandler);
 
-        pane.getChildren().add(new Label("Prescribe"));
-        final HBox addPrescription = new HBox();
-        final TextField tp = new TextField();
-        final Button bp = new Button("Add");
-        addPrescription.getChildren().addAll(tp, bp);
-        pane.getChildren().add(addPrescription);
-        final HealthProfessionalView parent = this;
         final EventHandler<ActionEvent> prescriptionHandler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent event) {
-                final String text = tp.getText().trim();
+                final String text = prescriptionTextField.getText().trim();
                 if (text.equals("")) {
                     return; // Do nothing
                 }
-                tp.setText("");
-                tp.requestFocus();
+                prescriptionTextField.setText("");
+                prescriptionTextField.requestFocus();
                 parent.prescribe(text);
             }
         };
+
         // TODO: someone wrote some business logic within the view :-\
         List<String> predefPrescr = new ArrayList<>();
         predefPrescr.add("Paracetamol");
@@ -92,12 +103,12 @@ public class HealthProfessionalView {
             });
             pane.getChildren().add(predefPrescrB);
         }
-        tp.setOnAction(prescriptionHandler);
-        bp.setOnAction(prescriptionHandler);
+        prescriptionTextField.setOnAction(prescriptionHandler);
+        addButton.setOnAction(prescriptionHandler);
     }
 
     
-    /** 
+    /**
      * @param prescription
      */
     void prescribe(final String prescription) {
@@ -112,20 +123,26 @@ public class HealthProfessionalView {
         showPrescriptions();
     }
 
+    /*
+     * Show patient list prescription
+     */
     void showPrescriptions() {
         prescriptions.getChildren().clear();
-        Patient p = null;
+        Patient p = healthProfessional.getPatient(selectedPatientSSID);
+
         if (p == null) {
             prescriptions.getChildren().add(new Label(
                     "Use search above to see prescriptions"));
             return;
         }
+
         prescriptions.getChildren().add(new Label(
                 "Prescriptions for " + p.getName()));
-    /*    for (final Prescription pr : p.getPrescriptions(healthProfessional)) {
+
+        for (final Prescription pr : p.getPrescriptions(healthProfessional)) {
+
             final HBox pView = new HBox();
-            final Label content = new Label(
-                    "- " + pr.getContent());
+            final Label content = new Label("- " + pr.getContent());
             final Button removeBtn = new Button("x");
             removeBtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override

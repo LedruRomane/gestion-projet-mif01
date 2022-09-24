@@ -2,19 +2,18 @@ package fr.univ_lyon1.info.m1.mes.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Patient {
 
-    /*
-     * Attributes
+    /**
+     * Attributes.
      */
     private final List<Prescription> prescriptions = new ArrayList<>();
     private final String name;
     private final String ssID;
 
-    /*
-     * Contructor
+    /**
+     * Patient Constructor.
      * 
      * @param name
      * @param ssID
@@ -25,6 +24,8 @@ public class Patient {
     }
 
     /**
+     * Get Patient name. 
+     *
      * @return String
      */
     public String getName() {
@@ -32,6 +33,8 @@ public class Patient {
     }
 
     /**
+     * Get Patient SSID.
+     * 
      * @return String
      */
     public String getSSID() {
@@ -39,6 +42,8 @@ public class Patient {
     }
 
     /**
+     * Get Patient Prescriptions.
+     * 
      * @return List<Prescription>
      */
     public List<Prescription> getPrescriptions() {
@@ -46,16 +51,8 @@ public class Patient {
     }
 
     /**
-     * @param hp
-     * @return List<Prescription>
-     */
-    public List<Prescription> getPrescriptions(final HealthProfessional hp) {
-        return prescriptions.stream()
-                .filter(p -> p.getHealthProfessional() == hp)
-                .collect(Collectors.toList());
-    }
-
-    /**
+     * Add a prescription to the Patient.
+     * 
      * @param hp
      * @param content
      */
@@ -64,6 +61,8 @@ public class Patient {
     }
 
     /**
+     * Remove a prescription to the Patient.
+     * 
      * @param p
      */
     public void removePrescription(final Prescription p) {

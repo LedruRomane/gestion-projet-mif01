@@ -12,6 +12,7 @@ import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.model.MES;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
+import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
 
 public class HealthProTest {
     private MES model = new MES();
@@ -23,7 +24,7 @@ public class HealthProTest {
      */
     public void healthProfessionalNameTest() {
         // Given
-        HealthProfessional hp = new HealthProfessional("Dr. Smith", model);
+        HealthProfessional hp = new HealthProfessional("Dr. Smith");
 
         // When
         String name = hp.getName();
@@ -38,12 +39,14 @@ public class HealthProTest {
      */
     public void getPrescriptionTest() {
         // Given
-        HealthProfessional hp = new HealthProfessional("Dr. Smith", model);
+        HealthProfessional hp = model.createHealthProfessional(
+            HealthProfessionalType.PULMONOLOGIST, 
+            "Dr. Smith");
         Patient p = model.createPatient("Alice", "20123456789012");
         p.addPrescription(hp, "Do some sport");
 
         // When
-        List<Prescription> prescriptions = hp.getPrescriptions("20123456789012");
+        List<Prescription> prescriptions = p.getPrescriptions();
 
         // Then
         assertThat(prescriptions, hasItem(
@@ -58,12 +61,14 @@ public class HealthProTest {
      */
     public void getNotPrescriptionTest() {
         // Given
-        HealthProfessional hp = new HealthProfessional("Dr. Smith", model);
+        HealthProfessional hp = model.createHealthProfessional(
+            HealthProfessionalType.DENTIST, 
+            "Dr. Smith");
         Patient p = model.createPatient("Alice", "20123456789012");
         p.addPrescription(hp, "Eat fruits");
 
         // When
-        List<Prescription> prescriptions = hp.getPrescriptions("20123456789012");
+        List<Prescription> prescriptions = p.getPrescriptions();
 
         // Then
         assertThat(prescriptions, not(

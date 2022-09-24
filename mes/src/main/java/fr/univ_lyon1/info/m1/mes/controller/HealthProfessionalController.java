@@ -10,7 +10,7 @@ public class HealthProfessionalController {
 
     public HealthProfessionalController(final MES mes) {
         this.model = mes;
-        this.view = new HealthProfessionalView(new HealthProfessional("test", mes));
+        this.view = new HealthProfessionalView(new HealthProfessional("test"));
     }
 
     public HealthProfessionalView getView() {

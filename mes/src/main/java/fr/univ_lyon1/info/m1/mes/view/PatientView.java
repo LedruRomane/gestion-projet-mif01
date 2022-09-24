@@ -11,10 +11,10 @@ public class PatientView {
     private final PatientBox patientBox;
     private final Pane pane = new HBox();
 
-    public PatientView(final PatientController c) {
+    public PatientView(final PatientController patientController) {
 
-        this.controller = c;
-        this.patientBox = new PatientBox(c);
+        this.controller = patientController;
+        this.patientBox = new PatientBox(patientController);
         
         this.pane.getChildren().add(patientBox.asPane());
 

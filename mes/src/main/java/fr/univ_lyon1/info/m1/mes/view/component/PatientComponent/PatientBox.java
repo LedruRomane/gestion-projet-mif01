@@ -35,7 +35,7 @@ public class PatientBox {
     /**
      * 
      */
-    void refresh() {
+    private void refresh() {
 
         if (this.patient != null) {
             final Label patientNameLabel = new Label(patient.getName());
@@ -58,14 +58,14 @@ public class PatientBox {
      * 
      * @param p
      */
-    void setPatient(final Patient p) {
+    private void setPatient(final Patient p) {
         this.patient = p;
     }
 
     /**
      * 
      */
-    void showPrescriptions() {
+    private void showPrescriptions() {
         this.prescriptionPane = new PatientHealthProfessionalPrescription(
             this.controller,
             this.patient

@@ -1,7 +1,6 @@
 package fr.univ_lyon1.info.m1.mes.controller;
 
 import fr.univ_lyon1.info.m1.mes.model.MES;
-import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.view.PatientView;
 
 public class PatientController {

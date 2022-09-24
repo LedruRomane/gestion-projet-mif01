@@ -1,38 +1,37 @@
 package fr.univ_lyon1.info.m1.mes.view;
 
-import java.util.ArrayList;
-import java.util.List;
-import fr.univ_lyon1.info.m1.mes.model.Dentist;
-import fr.univ_lyon1.info.m1.mes.model.Homeopath;
-import fr.univ_lyon1.info.m1.mes.model.Pediatrician;
-import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
-import fr.univ_lyon1.info.m1.mes.model.Patient;
-import fr.univ_lyon1.info.m1.mes.utils.EasyAlert;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import fr.univ_lyon1.info.m1.mes.controller.HealthProfessionalController;
+import fr.univ_lyon1.info.m1.mes.view.component.HealthProfessionalComponent.HealthProfessionalBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
 public class HealthProfessionalView {
-    private final VBox pane = new VBox();
-    private final VBox prescriptions = new VBox();
-    private HealthProfessional healthProfessional;
-    private String selectedPatientSSID;
 
-    public HealthProfessionalView(final HealthProfessional hp) {
+    //private final VBox pane = new VBox();
+    //private final VBox prescriptions = new VBox();
+    //private HealthProfessional healthProfessional;
+    //private String selectedPatientSSID;
 
-        this.healthProfessional = hp;
-        final HealthProfessionalView parent = this;
+    private final HealthProfessionalController controller;
+    private final HealthProfessionalBox healthProfessionalBox;
+    private final Pane pane = new HBox();
+
+    public HealthProfessionalView(final HealthProfessionalController healthProfessionalController) {
+
+        //this.healthProfessional = hp;
+        //final HealthProfessionalView parent = this;
+
+        this.controller = healthProfessionalController;
+        this.healthProfessionalBox = new HealthProfessionalBox(healthProfessionalController);
+
+        this.pane.getChildren().add(healthProfessionalBox.asPane());
 
         pane.setStyle("-fx-border-color: gray;\n"
                 + "-fx-border-insets: 5;\n"
                 + "-fx-padding: 5;\n"
                 + "-fx-border-width: 1;\n");
 
+                /*
         final HBox searchBox = new HBox();
         final HBox addPrescriptionBox = new HBox();
 
@@ -105,13 +104,16 @@ public class HealthProfessionalView {
         }
         prescriptionTextField.setOnAction(prescriptionHandler);
         addButton.setOnAction(prescriptionHandler);
+        */
     }
 
     
+
     /**
      * @param prescription
      */
     void prescribe(final String prescription) {
+        /* 
         if (selectedPatientSSID == null) {
             EasyAlert.alert("Please select a patient first");
             return;
@@ -121,12 +123,14 @@ public class HealthProfessionalView {
                 .addPrescription(healthProfessional, prescription);
                 */
         showPrescriptions();
+        */
     }
 
     /*
      * Show patient list prescription
      */
     void showPrescriptions() {
+        /*
         prescriptions.getChildren().clear();
         Patient p = healthProfessional.getPatient(selectedPatientSSID);
 
@@ -155,7 +159,9 @@ public class HealthProfessionalView {
             });
             pView.getChildren().addAll(content, removeBtn);
             prescriptions.getChildren().add(pView);
-        } */
+        }
+        */
+        
     }
 
     

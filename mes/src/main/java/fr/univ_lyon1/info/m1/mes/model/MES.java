@@ -83,10 +83,16 @@ public class MES {
         final Patient b = createPatient("Bob Bar", "199010212345678");
         createPatient("Charles Boz", "102020212345678");
 
-        final HealthProfessional w = new HealthProfessional("Dr. Who");
-        final HealthProfessional s = new Dentist("Dr. Strange");
-        final HealthProfessional p = new Pediatrician("Dr. Epstein");
-        new Homeopath("Dr. Hahnemann");
+        final HealthProfessional w = createHealthProfessional(
+                HealthProfessionalType.PEDIATRICIAN,
+                "Dr. Who");
+        final HealthProfessional s = createHealthProfessional(
+                HealthProfessionalType.DENTIST,
+                "Dr. Strange");
+        final HealthProfessional p = createHealthProfessional(
+                HealthProfessionalType.PULMONOLOGIST,
+                "Dr. Epstein");
+        createHealthProfessional(HealthProfessionalType.HOMEOPATH, "Dr. Hahnemann");
 
         a.addPrescription(w, "One apple a day");
         a.addPrescription(w, "Sport twice a week");

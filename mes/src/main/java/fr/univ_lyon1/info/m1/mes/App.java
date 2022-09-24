@@ -1,7 +1,7 @@
 package fr.univ_lyon1.info.m1.mes;
 
+import fr.univ_lyon1.info.m1.mes.controller.MainController;
 import fr.univ_lyon1.info.m1.mes.model.MES;
-import fr.univ_lyon1.info.m1.mes.view.JfxView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -15,12 +15,9 @@ public class App extends Application {
      */
     @Override
     public void start(final Stage stage) throws Exception {
-        final MES model = new MES();
-        model.createExampleConfiguration();
-        new JfxView(model, stage, 600, 600);
-
-        // Second view
-        new JfxView(model, new Stage(), 600, 600);
+        final MES app = new MES();
+        new MainController(app);
+        new MainController(app);
     }
 
 

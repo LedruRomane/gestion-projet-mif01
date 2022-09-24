@@ -12,18 +12,19 @@ import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.model.MES;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
+import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
 
 public class HealthProTest {
-    MES model = new MES();
+    private MES model = new MES();
 
     @Test
-    /**
+    /*
      * A simple test, purposely broken so that students can see what happens for
      * test failures.
      */
-    public void HealthProfessionalName() {
+    public void healthProfessionalNameTest() {
         // Given
-        HealthProfessional hp = new HealthProfessional("Dr. Smith", model);
+        HealthProfessional hp = new HealthProfessional("Dr. Smith");
 
         // When
         String name = hp.getName();
@@ -33,17 +34,19 @@ public class HealthProTest {
     }
 
     @Test
-    /**
+    /*
      * Test addPrescription, and demonstrate advanced Hamcrest assertions.
      */
-    public void GetPrescriptionTest() {
+    public void getPrescriptionTest() {
         // Given
-        HealthProfessional hp = new HealthProfessional("Dr. Smith", model);
+        HealthProfessional hp = model.createHealthProfessional(
+            HealthProfessionalType.PULMONOLOGIST, 
+            "Dr. Smith");
         Patient p = model.createPatient("Alice", "20123456789012");
         p.addPrescription(hp, "Do some sport");
 
         // When
-        List<Prescription> prescriptions = hp.getPrescriptions("20123456789012");
+        List<Prescription> prescriptions = p.getPrescriptions();
 
         // Then
         assertThat(prescriptions, hasItem(
@@ -51,19 +54,21 @@ public class HealthProTest {
     }
 
     @Test
-    /**
+    /*
      * Not-so-relevant test, mostly another example of advanced assertion. More
      * relevant things to test: play with several Patients, check that a
      * prescription made for one patient doesn't apply to the other, etc.
      */
-    public void GetNotPrescriptionTest() {
+    public void getNotPrescriptionTest() {
         // Given
-        HealthProfessional hp = new HealthProfessional("Dr. Smith", model);
+        HealthProfessional hp = model.createHealthProfessional(
+            HealthProfessionalType.DENTIST, 
+            "Dr. Smith");
         Patient p = model.createPatient("Alice", "20123456789012");
         p.addPrescription(hp, "Eat fruits");
 
         // When
-        List<Prescription> prescriptions = hp.getPrescriptions("20123456789012");
+        List<Prescription> prescriptions = p.getPrescriptions();
 
         // Then
         assertThat(prescriptions, not(

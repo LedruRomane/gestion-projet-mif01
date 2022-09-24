@@ -7,7 +7,6 @@ import fr.univ_lyon1.info.m1.mes.model.Homeopath;
 import fr.univ_lyon1.info.m1.mes.model.Pediatrician;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
-import fr.univ_lyon1.info.m1.mes.model.Prescription;
 import fr.univ_lyon1.info.m1.mes.utils.EasyAlert;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -123,7 +122,7 @@ public class HealthProfessionalView {
         }
         prescriptions.getChildren().add(new Label(
                 "Prescriptions for " + p.getName()));
-        for (final Prescription pr : p.getPrescriptions(healthProfessional)) {
+    /*    for (final Prescription pr : p.getPrescriptions(healthProfessional)) {
             final HBox pView = new HBox();
             final Label content = new Label(
                     "- " + pr.getContent());
@@ -139,7 +138,7 @@ public class HealthProfessionalView {
             });
             pView.getChildren().addAll(content, removeBtn);
             prescriptions.getChildren().add(pView);
-        }
+        } */
     }
 
     

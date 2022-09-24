@@ -20,7 +20,7 @@ public class MainController {
         new MainView(new Stage(),
                 this, this.healthController.getView(),
                 this.patientController.getView(),
-                600, 600);
+                1000, 600);
     }
 
     public void onClickButton() {

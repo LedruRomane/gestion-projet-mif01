@@ -2,16 +2,15 @@ package fr.univ_lyon1.info.m1.mes.view;
 
 import fr.univ_lyon1.info.m1.mes.controller.MainController;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.stage.Stage;
 
 public class MainView {
     
-    private Pane patients = new VBox();
-    private Pane healthPro = new VBox();
+    private Tab patientTab = new Tab("Patient");
+    private Tab healthProTab = new Tab("HealthProfessional");
 
     private final MainController mainController;
 
@@ -23,18 +22,16 @@ public class MainView {
             final HealthProfessionalView healthProfessionalView,
             final PatientView patientView,
             final int width, final int height) {
+
         this.mainController = mainController;
         // Name of window
         stage.setTitle("Mon Espace Santé");
 
-        final HBox root = new HBox(10);
+        patientTab.setContent(patientView.asPane());
+        healthProTab.setContent(healthProfessionalView.asPane());
 
-        root.getChildren().add(patientView.asPane());
-
-        root.getChildren().add(healthProfessionalView.asPane());
-
-        HBox.setHgrow(patients, Priority.SOMETIMES);
-        HBox.setHgrow(healthPro, Priority.ALWAYS);
+        final TabPane root = new TabPane(patientTab, healthProTab);
+        root.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 
         // Everything's ready: add it to the scene and display it
         final Scene scene = new Scene(root, width, height);

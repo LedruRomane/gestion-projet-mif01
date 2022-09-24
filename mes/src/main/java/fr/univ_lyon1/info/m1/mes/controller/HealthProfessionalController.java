@@ -9,10 +9,17 @@ public class HealthProfessionalController {
 
     public HealthProfessionalController(final MES mes) {
         this.model = mes;
-        this.view = new HealthProfessionalView(this);
+        this.view = new HealthProfessionalView(this, model);
     }
 
     public HealthProfessionalView getView() {
         return this.view;
     }
+
+    /* 
+    public List<HealthProfessional> getHealthProfessional() {
+        //TODO 
+        return model.getHealthProfessional();
+    }
+    */
 }

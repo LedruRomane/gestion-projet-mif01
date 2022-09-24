@@ -9,22 +9,24 @@ import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
 
 public class MES {
 
-    /*
-     * Attributes
+    /**
+     * Attributes.
      */
     private final List<HealthProfessional> healthProfessionalsList = new ArrayList<>();
     private final Map<String, Patient> patientsList = new HashMap<>();
 
-    /*
-     * Constructor
+    /**
+     * Return HealthPofessionals list within MES.
      * 
-     * @return
+     * @return List<HealthProfessional>
      */
     public List<HealthProfessional> getHealthProfessionals() {
         return healthProfessionalsList;
     }
 
     /**
+     * Return patients list within MES.
+     * 
      * @return List<Patient>
      */
     public List<Patient> getPatients() {
@@ -32,6 +34,8 @@ public class MES {
     }
 
     /**
+     * Create a new patient and return it.
+     *
      * @param name
      * @param ssID
      * @return Patient
@@ -43,7 +47,7 @@ public class MES {
     }
 
     /**
-     * Factory builder for HealthProfessional.
+     * Create a new Health Professional and return it.
      * 
      * @param name
      * @return HealthProfessional
@@ -74,8 +78,9 @@ public class MES {
         return p;
     };
 
-    /*
-     * @return List<HealthProfessional>
+    /**
+     * Create an example configuration for the current instance.
+     * 
      */
 
     public void createExampleConfiguration() {

@@ -13,29 +13,22 @@ import javafx.scene.control.SplitPane;
 
 public class HealthProfessionalView implements PropertyChangeListener {
 
-    //private final VBox pane = new VBox();
-    //private final VBox prescriptions = new VBox();
-    //private HealthProfessional healthProfessional;
-    //private String selectedPatientSSID;
-
     private final HealthProfessionalController controller;
     private final HealthProfessionalBox healthProfessionalBox;
     private final HealthProfessionalSelect healthProfessionalSelect;
     private final SplitPane pane = new SplitPane();
 
     public HealthProfessionalView(
-        final HealthProfessionalController healthProfessionalController, 
-        final MES mes
-        ) {
+            final HealthProfessionalController healthProfessionalController,
+            final MES mes) {
         this.controller = healthProfessionalController;
         this.healthProfessionalBox = new HealthProfessionalBox(healthProfessionalController);
         this.healthProfessionalSelect = new HealthProfessionalSelect(healthProfessionalController);
 
         this.pane.getItems().addAll(
-            healthProfessionalBox.asPane(),
-            healthProfessionalSelect.asPane()
-            );
-        
+                healthProfessionalBox.asPane(),
+                healthProfessionalSelect.asPane());
+
         pane.setDividerPosition(0, 1 / (double) 2);
 
         pane.setStyle("-fx-border-color: gray;\n"
@@ -45,20 +38,21 @@ public class HealthProfessionalView implements PropertyChangeListener {
                 + "-fx-border-radius: 10");
     }
 
-    
-
     /**
      * @param prescription
      */
     void prescribe(final String prescription) {
     }
 
+    /**
+     * Mise à jour de la vue lors d'évènements sur des objets écoutés.
+     */
     public void propertyChange(final PropertyChangeEvent evt) {
         this.healthProfessionalSelect.updateHealthProfessional(
-            (List<HealthProfessional>) evt.getNewValue());
+                (List<HealthProfessional>) evt.getNewValue());
     }
-    
-    /** 
+
+    /**
      * @return Pane
      */
     public SplitPane asPane() {

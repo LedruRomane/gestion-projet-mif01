@@ -1,5 +1,7 @@
 package fr.univ_lyon1.info.m1.mes.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,11 +14,20 @@ public class MES {
     /**
      * Attributes.
      */
+    private PropertyChangeSupport changes = new PropertyChangeSupport(this);
     private final List<HealthProfessional> healthProfessionalsList = new ArrayList<>();
     private final Map<String, Patient> patientsList = new HashMap<>();
 
+
     /**
-     * Return HealthPofessionals list within MES.
+     * Constructor.
+     */
+    public MES() {
+        this.createExampleConfiguration();
+    }
+
+    /**
+     * Return HealthProfessionals list within MES.
      * 
      * @return List<HealthProfessional>
      */
@@ -43,6 +54,7 @@ public class MES {
     public Patient createPatient(final String name, final String ssID) {
         final Patient p = new Patient(name, ssID);
         patientsList.put(ssID, p);
+        changes.firePropertyChange("patientList", null, this.patientsList);
         return p;
     }
 
@@ -75,6 +87,9 @@ public class MES {
                 throw new Error("Unknown professional type");
         }
         healthProfessionalsList.add(p);
+        changes.firePropertyChange("healthList", 
+            null,
+            this.healthProfessionalsList);
         return p;
     };
 
@@ -105,5 +120,13 @@ public class MES {
         b.addPrescription(s, "Snake oil");
         b.addPrescription(p, "Snake oil");
 
+    }
+
+    public void addPropertyChangeListener(final String name, final PropertyChangeListener l) {
+        changes.addPropertyChangeListener(name, l);
+    }
+
+    public void removePropertyChangeListener(final String name, final PropertyChangeListener l) {
+        changes.removePropertyChangeListener(name, l);
     }
 }

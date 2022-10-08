@@ -13,9 +13,6 @@ public class MainController {
         this.model = mes;
         this.healthController = new HealthProfessionalController(mes);
         this.patientController = new PatientController(mes);
-
-        // Init Views
-        model.createExampleConfiguration();
         
         new MainView(new Stage(),
                 this, this.healthController.getView(),

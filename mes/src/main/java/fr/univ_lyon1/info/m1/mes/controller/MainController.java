@@ -11,8 +11,8 @@ public class MainController {
 
     public MainController(final MES mes) {
         this.model = mes;
-        this.healthController = new HealthProfessionalController(mes);
-        this.patientController = new PatientController(mes);
+        this.healthController = new HealthProfessionalController(this.model);
+        this.patientController = new PatientController(this.model);
         
         new MainView(new Stage(),
                 this, this.healthController.getView(),

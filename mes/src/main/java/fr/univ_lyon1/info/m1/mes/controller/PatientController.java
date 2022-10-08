@@ -9,7 +9,8 @@ public class PatientController {
 
     public PatientController(final MES mes) {
         this.model = mes;
-        this.view = new PatientView(this);
+        this.view = new PatientView(this, this.model);
+        this.model.addPropertyChangeListener("patientList", this.view);
     }
 
     public PatientView getView() {

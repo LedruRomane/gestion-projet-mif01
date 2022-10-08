@@ -36,6 +36,10 @@ public class HealthProfessionalView implements PropertyChangeListener {
                 + "-fx-padding: 5;\n"
                 + "-fx-border-width: 1;\n"
                 + "-fx-border-radius: 10");
+                // Update Pro list
+                this.healthProfessionalSelect.updateHealthProfessional(
+                    mes.getHealthProfessionals()
+                );
     }
 
     /**

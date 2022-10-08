@@ -92,13 +92,15 @@ public class HealthProfessionalSelect {
         // Combobox events
         healthProComboBox.getSelectionModel().selectedItemProperty().addListener(
             (options, oldValue, newValue) -> {
-            System.out.println(newValue);
+            controller.selectHealthProfessional(newValue);
          }); 
     }
 
     public void updateHealthProfessional(final List<HealthProfessional> proList) {
+        HealthProfessional oldPro = this.healthProComboBox.getSelectionModel().getSelectedItem();
         this.healthProComboBox.getItems().clear();
         this.healthProComboBox.setItems(FXCollections.observableArrayList(proList));
+        this.healthProComboBox.getSelectionModel().select(oldPro);
     }
 
     public Pane asPane() {

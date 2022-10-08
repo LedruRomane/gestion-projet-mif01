@@ -4,11 +4,16 @@ import java.util.List;
 
 import fr.univ_lyon1.info.m1.mes.controller.PatientController;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.collections.FXCollections;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -42,18 +47,18 @@ public class PatientSelect {
 
         final Label prescriptionTitleLabel = new Label("Nouveau Patient : ");
         final Label nameLabel = new Label("Nom : ");
-        final TextField namTextField = new TextField();
+        final TextField nameTextField = new TextField();
         final Label typeLabel = new Label("SSID : ");
-        final TextField patientSsidComboBox = new TextField();
-        final Button searchButton = new Button("Créer");
+        final TextField patientSsidTextField = new TextField();
+        final Button createButton = new Button("Créer");
 
         this.nomFormBox.getChildren().addAll(
             nameLabel,
-            namTextField
+            nameTextField
         );
         this.ssidFormBox.getChildren().addAll(
             typeLabel,
-            patientSsidComboBox
+            patientSsidTextField
         );
 
         this.patientSelectBox.getChildren().addAll(
@@ -61,8 +66,26 @@ public class PatientSelect {
             prescriptionTitleLabel,
             nomFormBox,
             ssidFormBox,
-            searchButton
+            createButton
         );
+
+        // Buttons
+        createButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(final ActionEvent event) {
+                // Vérifier les champs non remplis
+                if (nameTextField.getText() == "" || patientSsidTextField.getText() == "") {
+                    Alert alert = new Alert(AlertType.ERROR,
+                            "Veuillez remplir tout les champs!", ButtonType.OK);
+                    alert.showAndWait();
+                    return;
+                }
+                Patient newPatient = controller.createPatient(
+                        nameTextField.getText(),
+                        patientSsidTextField.getText());
+                patientComboBox.getSelectionModel().select(newPatient);
+            }
+        });
     }
 
     public void updatePatient(final List<Patient> patientList) {

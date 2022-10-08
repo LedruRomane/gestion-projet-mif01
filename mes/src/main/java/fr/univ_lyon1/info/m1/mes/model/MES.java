@@ -54,7 +54,7 @@ public class MES {
     public Patient createPatient(final String name, final String ssID) {
         final Patient p = new Patient(name, ssID);
         patientsList.put(ssID, p);
-        changes.firePropertyChange("patientList", null, this.patientsList);
+        changes.firePropertyChange("patientList", null, this.getPatients());
         return p;
     }
 

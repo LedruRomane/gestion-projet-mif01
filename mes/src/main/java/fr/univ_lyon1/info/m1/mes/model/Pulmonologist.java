@@ -9,5 +9,8 @@ public class Pulmonologist extends HealthProfessional {
      */
     public Pulmonologist(final String name) {
         super(name);
+        this.addPrefPrescription(new Prescription(this, "More sport"));
+        this.addPrefPrescription(new Prescription(this, "Paracetamol 500"));
+        this.addPrefPrescription(new Prescription(this, "Breath test"));
     }
 }

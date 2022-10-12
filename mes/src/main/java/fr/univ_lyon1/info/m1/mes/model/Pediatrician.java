@@ -9,5 +9,10 @@ public class Pediatrician extends HealthProfessional {
      */
     public Pediatrician(final String name) {
         super(name);
+        this.addPrefPrescription(new Prescription(this, "More sport"));
+        this.addPrefPrescription(new Prescription(this, "Less Fastfood"));
+        this.addPrefPrescription(new Prescription(this, "Bonbon"));
+        this.addPrefPrescription(new Prescription(this, "Paracetamol 100"));
+
     }
 }

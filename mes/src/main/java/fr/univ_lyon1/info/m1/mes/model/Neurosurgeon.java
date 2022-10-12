@@ -9,5 +9,11 @@ public class Neurosurgeon extends HealthProfessional {
      */
     public Neurosurgeon(final String name) {
         super(name);
+        this.addPrefPrescription(new Prescription(this, "Paracetamol"));
+        this.addPrefPrescription(new Prescription(this, "Head magic healer"));
+        this.addPrefPrescription(new Prescription(this, "Paillettes à cerveau"));
+
     }
+
 }
+

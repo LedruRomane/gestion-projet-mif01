@@ -2,13 +2,6 @@ package fr.univ_lyon1.info.m1.mes.model;
 
 public class Pediatrician extends HealthProfessional {
 
-    private final Prescription[] prefPediatricianPrescriptions = {
-        new Prescription(this, "Bonbon"),
-        new Prescription(this, "Less Fastfood"),
-        new Prescription(this, "More sport"),
-        new Prescription(this, "Paracetamol 100")
-    };
-
     /**
      * Pediatrician Constructor.
      * 
@@ -16,5 +9,10 @@ public class Pediatrician extends HealthProfessional {
      */
     public Pediatrician(final String name) {
         super(name);
+        this.addPrefPrescription(new Prescription(this, "More sport"));
+        this.addPrefPrescription(new Prescription(this, "Less Fastfood"));
+        this.addPrefPrescription(new Prescription(this, "Bonbon"));
+        this.addPrefPrescription(new Prescription(this, "Paracetamol 100"));
+
     }
 }

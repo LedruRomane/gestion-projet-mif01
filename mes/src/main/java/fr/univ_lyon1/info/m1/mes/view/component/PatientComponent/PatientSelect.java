@@ -86,6 +86,11 @@ public class PatientSelect {
                 patientComboBox.getSelectionModel().select(newPatient);
             }
         });
+
+        patientComboBox.getSelectionModel().selectedItemProperty().addListener(
+            (options, oldValue, newValue) -> {
+            controller.selectPatient(newValue);
+         }); 
     }
 
     public void updatePatient(final List<Patient> patientList) {

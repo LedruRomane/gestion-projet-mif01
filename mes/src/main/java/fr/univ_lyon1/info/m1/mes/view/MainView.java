@@ -7,35 +7,53 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.stage.Stage;
 
+
 public class MainView {
     
-    private Tab patientTab = new Tab("Patient");
-    private Tab healthProTab = new Tab("HealthProfessional");
+    private final Tab patientTab;
+    private final Tab healthProTab;
+    private final TabPane root;
 
     private final MainController mainController;
 
     /**
-     * Create the main view of the application.
+     * Constructor for the main view of the application.
+     * @param stage Stage
+     * @param mainController MainController
+     * @param healthProfessionalView HealthProfessionalView
+     * @param patientView PatientView
+     * @param width int
+     * @param height int
      */
-    public MainView(final Stage stage,
-            final MainController mainController, 
-            final HealthProfessionalView healthProfessionalView,
-            final PatientView patientView,
-            final int width, final int height) {
+    public MainView(
+        final Stage stage,
+        final MainController mainController, 
+        final HealthProfessionalView healthProfessionalView,
+        final PatientView patientView,
+        final int width, final int height) {
 
         this.mainController = mainController;
-        // Name of window
-        stage.setTitle("Mon Espace Santé");
+        
+        this.patientTab = new Tab("Patient");
+        this.healthProTab = new Tab("HealthProfessional");
+        this.patientTab.setContent(patientView.asPane());
+        this.healthProTab.setContent(healthProfessionalView.asPane());
+        
+        this.root = new TabPane(patientTab, healthProTab);
+        this.root.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 
-        patientTab.setContent(patientView.asPane());
-        healthProTab.setContent(healthProfessionalView.asPane());
-
-        final TabPane root = new TabPane(patientTab, healthProTab);
-        root.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-
-        // Everything's ready: add it to the scene and display it
         final Scene scene = new Scene(root, width, height);
         stage.setScene(scene);
+        stage.setTitle("Mon espace santé");
         stage.show();
     }
+
+    /**
+     * Return mainController.
+     * @return MainController
+     */
+    public MainController getController() {
+        return this.mainController;
+    }
+    
 }

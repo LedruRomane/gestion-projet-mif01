@@ -94,6 +94,52 @@ public class MES {
     };
 
     /**
+     * Find Patient by SSID.
+     * @param ssID
+     * @return 1 Patient or null.
+     */
+    public Patient findPatientBySSID(final String ssID) {
+        Patient resultat = null;
+        if (this.patientsList.containsKey(ssID)) {
+            resultat = this.patientsList.get(ssID);
+        }
+        return resultat;
+    }
+
+    /**
+     * Find Patient by starting Name.
+     * @param nom
+     * @return List<Patient>.
+     */
+    public List<Patient> findPatientByName(final String nom) {
+        List<Patient> resultat = new ArrayList<Patient>();
+        for (Patient p : this.patientsList.values()) {
+            if (p.getName().startsWith(nom)) {
+                resultat.add(p);
+            }
+        }
+        return resultat;
+    }
+
+    /**
+     * Find Patient by a Prescription (keyword or part of it).
+     * @param prescription
+     * @return List<Patient>.
+     */
+    public List<Patient> findPatientsByPrescription(final String prescription) {
+        List<Patient> resultat = new ArrayList<Patient>();
+        for (Patient p : this.patientsList.values()) {
+            for (Prescription e : p.getPrescriptions()) {
+                if (e.getContent().contains(prescription)) {
+                    resultat.add(p);
+                    break;
+                }
+            }
+        }
+        return resultat;
+    }
+
+    /**
      * Create an example configuration for the current instance.
      * 
      */
@@ -101,7 +147,7 @@ public class MES {
     public void createExampleConfiguration() {
         final Patient a = createPatient("Alice Foo", "299010212345678");
         final Patient b = createPatient("Bob Bar", "199010212345678");
-        createPatient("Charles Boz", "102020212345678");
+        final Patient c = createPatient("Charles Boz", "102020212345678");
 
         final HealthProfessional w = createHealthProfessional(
                 HealthProfessionalType.PEDIATRICIAN,
@@ -114,18 +160,29 @@ public class MES {
                 "Dr. Epstein");
         createHealthProfessional(HealthProfessionalType.HOMEOPATH, "Dr. Hahnemann");
 
-        a.addPrescription(w, "One apple a day");
-        a.addPrescription(w, "Sport twice a week");
-        b.addPrescription(w, "Whatever placebo, you're not sick");
-        b.addPrescription(s, "Snake oil");
-        b.addPrescription(p, "Snake oil");
-
+        a.addPrescription(new Prescription(w, "One apple a day"));
+        b.addPrescription(new Prescription(w, "One apple a day"));
+        a.addPrescription(new Prescription(w, "Sport twice a week"));
+        b.addPrescription(new Prescription(w, "Whatever placebo, you're not sick"));
+        b.addPrescription(new Prescription(s, "Snake oil"));
+        b.addPrescription(new Prescription(p, "Snake oil"));
+        c.addPrescription(new Prescription(p, "apple ddd"));
     }
 
+    /**
+     * Ajout d'un object d'écoute sur MES.
+     * @param name
+     * @param l
+     */
     public void addPropertyChangeListener(final String name, final PropertyChangeListener l) {
         changes.addPropertyChangeListener(name, l);
     }
 
+    /**
+     * Suppression d'un object d'écoute sur MES.
+     * @param name
+     * @param l
+     */
     public void removePropertyChangeListener(final String name, final PropertyChangeListener l) {
         changes.removePropertyChangeListener(name, l);
     }

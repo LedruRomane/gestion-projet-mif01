@@ -43,7 +43,7 @@ public class HealthProTest {
             HealthProfessionalType.PULMONOLOGIST, 
             "Dr. Smith");
         Patient p = model.createPatient("Alice", "20123456789012");
-        p.addPrescription(hp, "Do some sport");
+        p.addPrescription(new Prescription(hp, "Do some sport"));
 
         // When
         List<Prescription> prescriptions = p.getPrescriptions();
@@ -65,7 +65,7 @@ public class HealthProTest {
             HealthProfessionalType.DENTIST, 
             "Dr. Smith");
         Patient p = model.createPatient("Alice", "20123456789012");
-        p.addPrescription(hp, "Eat fruits");
+        p.addPrescription(new Prescription(hp, "Eat fruits"));
 
         // When
         List<Prescription> prescriptions = p.getPrescriptions();

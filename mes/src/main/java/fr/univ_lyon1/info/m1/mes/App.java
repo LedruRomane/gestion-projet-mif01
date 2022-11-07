@@ -24,6 +24,7 @@ public class App extends Application {
     /**
      * A main method in case the user launches the application using
      * App as the main class.
+     * @param args Arguments inline code.
      */
     public static void main(final String[] args) {
         Application.launch(args);

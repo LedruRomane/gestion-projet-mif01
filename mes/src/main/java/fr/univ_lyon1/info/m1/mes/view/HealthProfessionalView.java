@@ -21,6 +21,7 @@ public class HealthProfessionalView implements PropertyChangeListener {
     public HealthProfessionalView(
             final HealthProfessionalController healthProfessionalController,
             final MES mes) {
+
         this.controller = healthProfessionalController;
         this.healthProfessionalBox = new HealthProfessionalBox(healthProfessionalController);
         this.healthProfessionalSelect = new HealthProfessionalSelect(healthProfessionalController);
@@ -38,8 +39,7 @@ public class HealthProfessionalView implements PropertyChangeListener {
                 + "-fx-border-radius: 10");
                 // Update Pro list
                 this.healthProfessionalSelect.updateHealthProfessional(
-                    mes.getHealthProfessionals()
-                );
+                    mes.getHealthProfessionals());
     }
 
     /**
@@ -52,8 +52,9 @@ public class HealthProfessionalView implements PropertyChangeListener {
      * Mise à jour de la vue lors d'évènements sur des objets écoutés.
      */
     public void propertyChange(final PropertyChangeEvent evt) {
+        //TODO : check type evt.getNewValue()
         this.healthProfessionalSelect.updateHealthProfessional(
-                (List<HealthProfessional>) evt.getNewValue());
+            (List<HealthProfessional>) evt.getNewValue());
     }
 
     /**

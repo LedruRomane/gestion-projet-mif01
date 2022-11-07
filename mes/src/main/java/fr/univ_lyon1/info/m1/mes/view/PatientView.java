@@ -14,19 +14,17 @@ import javafx.scene.control.SplitPane;
 public class PatientView implements PropertyChangeListener {
 
     private final PatientController controller;
-    private final PatientBox patientBox;
+    private PatientBox patientBox;
     private final PatientSelect patientSelect;
     private final SplitPane pane = new SplitPane();
 
     public PatientView(final PatientController patientController, final MES mes) {
 
         this.controller = patientController;
-
-        this.patientBox = new PatientBox(controller);
+        
+        this.patientBox = new PatientBox(controller, null);
         this.patientSelect = new PatientSelect(controller);
-        this.pane.getItems().addAll(
-                patientBox.asPane(),
-                patientSelect.asPane());
+        this.pane.getItems().addAll(patientBox.asPane(), patientSelect.asPane());
 
         pane.setDividerPosition(0, 1 / (double) 2);
 
@@ -43,8 +41,22 @@ public class PatientView implements PropertyChangeListener {
      * Mise à jour de la vue lors d'évènements sur des objets écoutés.
      */
     public void propertyChange(final PropertyChangeEvent evt) {
-        this.patientSelect.updatePatient(
-                (List<Patient>) evt.getNewValue());
+        this.patientSelect.updatePatient((List<Patient>) evt.getNewValue());
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public void selectPatient(final Patient p) {
+        this.patientBox.setPatient(p);
+    }
+
+    /**
+     * @return PatientBox
+     */
+    public PatientBox getPatientBox() {
+        return this.patientBox;
     }
 
     /**

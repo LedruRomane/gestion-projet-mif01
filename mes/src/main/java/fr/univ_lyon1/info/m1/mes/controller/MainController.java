@@ -19,8 +19,4 @@ public class MainController {
                 this.patientController.getView(),
                 1000, 600);
     }
-
-    public void onClickButton() {
-        System.out.println("Hey");
-    }
 }

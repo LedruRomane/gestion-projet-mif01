@@ -11,9 +11,12 @@ import java.util.Optional;
  * {@code EasyAlert.alert("message").}
  */
 public interface EasyAlert {
-    /**
-     * Display msg in a popup window and block until the user clicks OK.
-     */
+
+     /**
+      * Display msg in a popup window and block until the user clicks OK.
+      * @param title String
+      * @param msg String
+      */
     static void alert(String title, String msg) {
         Alert a = new Alert(AlertType.ERROR);
         a.setContentText(msg);
@@ -21,6 +24,12 @@ public interface EasyAlert {
         a.showAndWait();
     }
 
+    /**
+     * Display msg in a popup window and block until the user clicks OK.
+     * @param title String
+     * @param msg String
+     * @param callback Runnable
+     */
     static void alertPromptYesNo(String title, String msg, Runnable callback) {
         Alert alert = new Alert(AlertType.WARNING,
             msg,
@@ -35,6 +44,15 @@ public interface EasyAlert {
         }
     }
 
+    /**
+     * Display msg in a popup window and block until the user made a choice.
+     * @param title String
+     * @param header String
+     * @param msg String
+     * @param callbackSelected Runnable
+     * @param callBackCustom Runnable
+     * @param callBackBoth Runnable
+     */
     static void alertPromptComboBoxOrTextFieldOrBoth(
         String title, 
         String header, 

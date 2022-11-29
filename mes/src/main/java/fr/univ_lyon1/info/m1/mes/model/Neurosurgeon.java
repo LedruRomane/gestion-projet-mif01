@@ -4,8 +4,7 @@ public class Neurosurgeon extends HealthProfessional {
 
     /**
      * Neurosurgeon Constructor.
-     * 
-     * @param name
+     * @param name String
      */
     public Neurosurgeon(final String name) {
         super(name);

@@ -10,9 +10,6 @@ import java.util.Map;
 
 public final class MES {
 
-    /**
-     * Attributes.
-     */
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
     private final List<HealthProfessional> healthProfessionalsList = new ArrayList<>();
     private final Map<String, Patient> patientsList = new HashMap<>();
@@ -38,8 +35,7 @@ public final class MES {
 
     /**
      * Return HealthProfessionals list within MES.
-     * 
-     * @return List<HealthProfessional>
+     * @return List HealthProfessional
      */
     public List<HealthProfessional> getHealthProfessionals() {
         return healthProfessionalsList;
@@ -47,8 +43,7 @@ public final class MES {
 
     /**
      * Return patients list within MES.
-     * 
-     * @return List<Patient>
+     * @return List Patient
      */
     public List<Patient> getPatients() {
         return new ArrayList<>(patientsList.values());
@@ -86,8 +81,8 @@ public final class MES {
 
     /**
      * Find Patient by SSID.
-     * @param ssID
-     * @return 1 Patient or null.
+     * @param ssID String
+     * @return Patient or null.
      */
     public Patient findPatientBySSID(final String ssID) {
         Patient resultat = null;
@@ -99,8 +94,8 @@ public final class MES {
 
     /**
      * Find Patient by starting Name.
-     * @param nom
-     * @return List<Patient>.
+     * @param nom String
+     * @return List Patient
      */
     public List<Patient> findPatientByName(final String nom) {
         List<Patient> resultat = new ArrayList<Patient>();
@@ -114,8 +109,8 @@ public final class MES {
 
     /**
      * Find Patient by a Prescription (keyword or part of it).
-     * @param prescription
-     * @return List<Patient>.
+     * @param prescription String
+     * @return List Patient
      */
     public List<Patient> findPatientsByPrescription(final String prescription) {
         List<Patient> resultat = new ArrayList<Patient>();
@@ -131,6 +126,36 @@ public final class MES {
     }
 
     /**
+     * Create an example configuration for the current instance.
+     * 
+     */
+
+    public void createExampleConfiguration() {
+        final Patient a = createPatient("Alice Foo", "299010212345678");
+        final Patient b = createPatient("Bob Bar", "199010212345678");
+        final Patient c = createPatient("Charles Boz", "102020212345678");
+
+        final HealthProfessional w = createHealthProfessional(
+                HealthProfessionalType.PEDIATRICIAN,
+                "Dr. Who");
+        final HealthProfessional s = createHealthProfessional(
+                HealthProfessionalType.DENTIST,
+                "Dr. Strange");
+        final HealthProfessional p = createHealthProfessional(
+                HealthProfessionalType.PULMONOLOGIST,
+                "Dr. Epstein");
+        createHealthProfessional(HealthProfessionalType.HOMEOPATH, "Dr. Hahnemann");
+
+        a.addPrescription(new Prescription(w, "One apple a day"));
+        b.addPrescription(new Prescription(w, "One apple a day"));
+        a.addPrescription(new Prescription(w, "Sport twice a week"));
+        b.addPrescription(new Prescription(w, "Whatever placebo, you're not sick"));
+        b.addPrescription(new Prescription(s, "Snake oil"));
+        b.addPrescription(new Prescription(p, "Snake oil"));
+        c.addPrescription(new Prescription(p, "apple ddd"));
+    }
+
+    /**
      * Ajout d'un object d'écoute sur MES.
      * @param name
      * @param l
@@ -140,9 +165,9 @@ public final class MES {
     }
 
     /**
-     * Suppression d'un object d'écoute sur MES.
-     * @param name
-     * @param l
+     * Delete object's listenner on MES.
+     * @param name String
+     * @param l PropertyChangeListener
      */
     public void removePropertyChangeListener(final String name, final PropertyChangeListener l) {
         changes.removePropertyChangeListener(name, l);

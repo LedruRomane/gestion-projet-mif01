@@ -4,8 +4,7 @@ public class Pulmonologist extends HealthProfessional {
 
     /**
      * Pulmonologist Constructor.
-     * 
-     * @param name
+     * @param name String
      */
     public Pulmonologist(final String name) {
         super(name);

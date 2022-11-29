@@ -4,8 +4,7 @@ public class Homeopath extends HealthProfessional {
 
     /**
      * Homeopath Constructor.
-     * 
-     * @param name
+     * @param name String
      */
     public Homeopath(final String name) {
         super(name);

@@ -4,8 +4,7 @@ public class Dentist extends HealthProfessional {
 
     /**
      * Dentist Constructor.
-     * 
-     * @param name
+     * @param name String
      */
     public Dentist(final String name) {
         super(name);

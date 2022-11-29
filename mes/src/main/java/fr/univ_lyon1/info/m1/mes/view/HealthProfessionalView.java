@@ -72,6 +72,7 @@ public class HealthProfessionalView implements PropertyChangeListener {
     }
 
     /**
+     * Get healthProfessionalBox component.
      * @return HealthProfessionalBox component.
      */
     public HealthProfessionalBox getHealthProfessionalBox() {
@@ -79,6 +80,7 @@ public class HealthProfessionalView implements PropertyChangeListener {
     }
 
     /**
+     * get HealthProfessionalController.
      * @return HealthProfessionalController
      */
     public HealthProfessionalController getController() {

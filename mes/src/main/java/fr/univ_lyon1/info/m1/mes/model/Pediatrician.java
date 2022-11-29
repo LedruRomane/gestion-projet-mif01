@@ -4,8 +4,7 @@ public class Pediatrician extends HealthProfessional {
 
     /**
      * Pediatrician Constructor.
-     * 
-     * @param name
+     * @param name String
      */
     public Pediatrician(final String name) {
         super(name);

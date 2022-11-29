@@ -7,9 +7,6 @@ import java.util.List;
 
 public class Patient {
 
-    /**
-     * Attributes.
-     */
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
     private final List<Prescription> prescriptions = new ArrayList<>();
     private String name;
@@ -30,8 +27,7 @@ public class Patient {
     }
 
     /**
-     * Get Patient name. 
-     *
+     * Get Patient name.
      * @return String
      */
     public String getName() {
@@ -65,8 +61,7 @@ public class Patient {
 
     /**
      * Get Patient Prescriptions.
-     * 
-     * @return List<Prescription>
+     * @return List Prescription
      */
     public List<Prescription> getPrescriptions() {
         return prescriptions;
@@ -74,8 +69,7 @@ public class Patient {
 
     /**
      * Add a prescription to the Patient.
-     * 
-     * @param p
+     * @param p Prescription
      */
     public void addPrescription(final Prescription p) {
         prescriptions.add(p);
@@ -84,18 +78,27 @@ public class Patient {
 
     /**
      * Remove a prescription to the Patient.
-     * 
-     * @param p
+     * @param p Prescription
      */
     public void removePrescription(final Prescription p) {
         prescriptions.remove(p);
         changes.firePropertyChange("prescription", null, this.getPrescriptions());
     }
 
+    /**
+     * Add object's listenner on Patient.
+     * @param name String
+     * @param l PropertyChangeListener
+     */
     public void addPropertyChangeListener(final String name, final PropertyChangeListener l) {
         changes.addPropertyChangeListener(name, l);
     }
 
+    /**
+     * Delete object's listenner on Patient.
+     * @param name String
+     * @param l PropertyChangeListener
+     */
     public void removePropertyChangeListener(final String name, final PropertyChangeListener l) {
         changes.removePropertyChangeListener(name, l);
     }

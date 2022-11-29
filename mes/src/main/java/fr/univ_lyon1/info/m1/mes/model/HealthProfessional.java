@@ -26,6 +26,7 @@ public class HealthProfessional {
     }
 
     /**
+     * Return HealthProfessional Name.
      * @return String
      */
     public String getName() {
@@ -47,16 +48,27 @@ public class HealthProfessional {
     }
 
     /**
-     * @param prescription prescription pref
+     * Add preference prescription.
+     * @param prescription Prescription
      */
     public void addPrefPrescription(final Prescription prescription) {
         this.prefPrescriptions.add(prescription);
     }
 
+    /**
+     * Add object's listenner on HealthProfessional.
+     * @param name String
+     * @param l PropertyChangeListener
+     */
     public void addPropertyChangeListener(final String name, final PropertyChangeListener l) {
         changes.addPropertyChangeListener(name, l);
     }
 
+    /**
+     * Delete object's listenner on HealthProfessional.
+     * @param name String
+     * @param l PropertyChangeListener
+     */
     public void removePropertyChangeListener(final String name, final PropertyChangeListener l) {
         changes.removePropertyChangeListener(name, l);
     }

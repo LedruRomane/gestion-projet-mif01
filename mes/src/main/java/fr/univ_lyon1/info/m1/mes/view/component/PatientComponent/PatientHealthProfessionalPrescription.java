@@ -91,6 +91,7 @@ public class PatientHealthProfessionalPrescription {
     }
 
     /**
+     * Return PatientHealthProfessionalPrescription Pane.
      * @return Pane
      */
     public Pane asPane() {

@@ -3,6 +3,7 @@ package fr.univ_lyon1.info.m1.mes.utils;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar;
 import java.util.Optional;
 
 /** 
@@ -31,6 +32,41 @@ public interface EasyAlert {
 
         if (result.get() == ButtonType.YES) {
             callback.run();
+        }
+    }
+
+    static void alertPromptComboBoxOrTextFieldOrBoth(
+        String title, 
+        String header, 
+        String msg, 
+        Runnable callbackSelected, 
+        Runnable callBackCustom, 
+        Runnable callBackBoth) {
+
+        ButtonType selected = new ButtonType("Selectionnée", ButtonBar.ButtonData.OK_DONE);
+        ButtonType custom = new ButtonType("Customisée", ButtonBar.ButtonData.OK_DONE);
+        ButtonType both = new ButtonType("Les deux", ButtonBar.ButtonData.OK_DONE);
+        ButtonType neatherType = new ButtonType("Aucun", ButtonBar.ButtonData.OK_DONE);
+
+        Alert alert = new Alert(AlertType.CONFIRMATION,
+        msg,
+        selected,
+        custom,
+        both,
+        neatherType);
+
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == selected) {
+            callbackSelected.run();
+        }
+        if (result.get() == custom) {
+            callBackCustom.run();
+        }
+        if (result.get() == both) {
+            callBackBoth.run();
         }
     }
 }

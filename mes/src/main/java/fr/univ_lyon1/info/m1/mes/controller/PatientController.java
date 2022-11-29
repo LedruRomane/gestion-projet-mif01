@@ -18,6 +18,9 @@ public class PatientController {
     }
 
     public void selectPatient(final Patient pro) {
+        if (pro == null) { 
+            return; 
+        }
         this.currentPatient = pro;
         this.view.selectPatient(pro);
         this.currentPatient.addPropertyChangeListener("prescription", this.view.getPatientBox());

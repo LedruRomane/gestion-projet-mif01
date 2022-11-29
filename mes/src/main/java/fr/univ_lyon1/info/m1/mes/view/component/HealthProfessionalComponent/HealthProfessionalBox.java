@@ -1,81 +1,272 @@
 package fr.univ_lyon1.info.m1.mes.view.component.HealthProfessionalComponent;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
 import fr.univ_lyon1.info.m1.mes.controller.HealthProfessionalController;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
-import javafx.collections.ObservableList;
+import fr.univ_lyon1.info.m1.mes.model.Patient;
+import fr.univ_lyon1.info.m1.mes.model.Prescription;
+import io.github.palexdev.materialfx.builders.layout.BorderBuilder;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXComboBox;
+import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.collections.FXCollections;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.util.StringConverter;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Alert.AlertType;
 
-public class HealthProfessionalBox {
+public class HealthProfessionalBox implements PropertyChangeListener {
 
+    /**
+     * Attributes.
+     */
     private final HealthProfessionalController controller;
+    private HealthProfessional professional;
+    private Patient currentPatient;
     private final Pane healthProfessionalPane = new VBox();
     private final Pane optionSearchPane = new HBox();
+    private final Pane searchResultPane = new VBox();
+    private final Pane patientPane = new VBox();
+    private Pane prescriptionPane = new VBox();
+    private ScrollPane prescriptionsScroll = new ScrollPane();
+    private MFXComboBox<Patient> patientComboBox = new MFXComboBox<Patient>();
     private HealthProfessionalPrescriptions prescriptionsToolPane;
     private HealthProfessionalPatientPrescription patientPrescriptionPane;
-    private HealthProfessional healthProfessional = null;
-    private ObservableList<String> optionSearch;
 
-    public HealthProfessionalBox(final HealthProfessionalController healthProfessionalController) {
+    /**
+     * Constructor HealthProfessionalBox component.
+     * @param healthProfessionalController HealthProfessionalController
+     * @param p HealthProfessional
+     */
+    public HealthProfessionalBox(
+        final HealthProfessionalController healthProfessionalController,
+        final HealthProfessional p) {
         this.controller = healthProfessionalController;
-        refrech();
+        this.professional = p;
+        this.currentPatient = null;
+        refresh();
     }
     
-    private void refrech() {
-        if (this.healthProfessional != null) {
+    /**
+     * Refresh function for dynamic view.
+     */
+    private void refresh() {
+        if (this.professional != null) {
 
-            final Label healthProfessionalNameLabel = new Label(healthProfessional.getName());
+            //Content
+            final Label healthProfessionalNameLabel = new Label(this.professional.getName());
             final Label searchPatientLabel = new Label("Rechercher patient : ");
-            final ComboBox patientComboBox = new ComboBox<String>(optionSearch);
-            final TextField searchTextField = new TextField();
-            final Button searchButton = new Button("Rechercher");
+            final String[] listChoices = {"N°patient", "Nom patient", "Prescription"};
+            final MFXComboBox<String> searchComboBox = new MFXComboBox<String>();
+            searchComboBox.setItems(FXCollections.observableArrayList(listChoices));
+            searchComboBox.setPromptText("Type recherche");
+            final MFXTextField searchTextField = new MFXTextField();
+            final MFXButton searchButton = new MFXButton("Rechercher");
 
-            this.optionSearchPane.getChildren().addAll(
-                patientComboBox,
+
+            this.optionSearchPane.getChildren().setAll(
+                searchComboBox,
                 searchTextField,
                 searchButton);
-            this.healthProfessionalPane.getChildren().addAll(
+            this.healthProfessionalPane.getChildren().setAll(
                 healthProfessionalNameLabel,
                 searchPatientLabel,
-                optionSearchPane
+                optionSearchPane,
+                searchResultPane,
+                patientPane
                 );
 
-            /* 
-            * TODO observable sur optionSearchPane pour afficher le bloc 6 patient. 
-            * TODO search by prescription : proposer une liste des patients
-            * qui ont cette prescription et pouvoir en selectionner 1 pour l'afficher et le gérer. 
-            */ 
-            showPatientPrescription(); //bloc 6 dynamique avec le patient selectionné du médecin.
-            showPrescriptionTool(); //bloc 7 dynamique du médecin en cours. 
+            //Css Stuff
+            this.prescriptionsScroll.setStyle("-fx-background-color:transparent;");
+            this.prescriptionsScroll.setPannable(true);
+            this.prescriptionsScroll.setMaxSize(450, 200);
+            this.prescriptionsScroll.setMinSize(100, 100);
+            this.healthProfessionalPane.setPadding(new Insets(10));
+            VBox.setMargin(healthProfessionalNameLabel, new Insets(10));
+            
+            healthProfessionalNameLabel.setFont(new Font("Arial", 20));
+
+            searchComboBox.setMinSize(150, 27);
+            searchComboBox.setMaxSize(150, 27);
+            searchTextField.setMinSize(200, 27);
+            searchTextField.setMaxSize(200, 27);
+
+            BorderBuilder border = new BorderBuilder();
+            border.addFill(
+                Paint.valueOf("#dc0f6c"),
+                BorderStrokeStyle.SOLID,
+                new CornerRadii(5),
+                new BorderWidths(1, 1, 1, 1),
+                new Insets(0, 0, 0, 0)
+            );
+            searchButton.setBorder(border.get());
+            this.prescriptionsScroll.setBorder(border.get());
+            
+            //Buttons & Events
+            searchButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(final ActionEvent event) {
+                    searchResultPane.getChildren().clear();
+                    patientPane.getChildren().clear();
+                    if (searchComboBox.getValue() == null 
+                    || searchTextField.getText().equals("")) {
+                        // TODO: easyalert
+                        Alert alert = new Alert(AlertType.ERROR,
+                            "Veuillez remplir tout les champs!", ButtonType.OK);
+                        alert.showAndWait();
+                        return;
+                    }
+                    // TODO: Better
+                    List<Patient> list = controller.getPatients(
+                        searchComboBox.getValue(),
+                        searchTextField.getText());
+
+                    if (list.isEmpty()) {
+                        final Label noChoice = new Label(
+                            "Aucun patient ne correspond à votre recherche");
+                            searchResultPane.getChildren().setAll(noChoice);
+                        return;
+                    }
+                    if (list.size() > 1) {
+                        showMultiplePatientChoice(list);
+                        return;
+                    }
+                    controller.selectPatient(list.get(0));
+                    return;
+                }
+
+            });
         }
     }
 
-    private void setHealthProfessional(final HealthProfessional hp) {
-        this.healthProfessional = hp;
+     /**
+     * Set new HealthProfessional select.
+     * @param hp HealthProfessional.
+     */
+    public void setHealthProfessional(final HealthProfessional hp) {
+        this.professional = hp;
+        optionSearchPane.getChildren().clear();
+        searchResultPane.getChildren().clear();
+        patientPane.getChildren().clear();
+        refresh();
     }
 
-    private void showPatientPrescription() {
-        this.patientPrescriptionPane = new HealthProfessionalPatientPrescription(
+    /**
+     * Show PatientPrescription when 1 Patient are load.
+     */
+    private void showPatientPrescription(final Patient patient) {
+        this.prescriptionPane.getChildren().setAll();
+        final Label name = new Label(patient.getName());
+        name.setFont(new Font("Arial", 18));
+        VBox.setMargin(name, new Insets(10));
+        this.patientPane.getChildren().addAll(name);
+        List<Prescription> prescriptions = this.controller.getPrescriptionsByPatient(patient);
+
+        for (final Prescription prescription : prescriptions) {
+             this.patientPrescriptionPane = new HealthProfessionalPatientPrescription(
             this.controller,
-            this.healthProfessional
-        );
-        this.healthProfessionalPane.getChildren().add(patientPrescriptionPane.asPane());
+            prescription
+            );
+            this.prescriptionPane.getChildren().add(this.patientPrescriptionPane.asPane());
+        }
+        this.prescriptionsScroll.setContent(this.prescriptionPane);
+        this.patientPane.getChildren().add(this.prescriptionsScroll);
+       
     }
 
+    /**
+     * Show PrescriptionTool.
+     */
     private void showPrescriptionTool() {
         this.prescriptionsToolPane = new HealthProfessionalPrescriptions(
             this.controller,
-            this.healthProfessional
+            this.professional
         );
-        this.healthProfessionalPane.getChildren().add(prescriptionsToolPane.asPane());
-
+        this.patientPane.getChildren().add(prescriptionsToolPane.asPane());
     }
 
+    /**
+     * Show comboBox selection if multiple patient choice with search.
+     * @param list List<Patient>
+     */
+    private void showMultiplePatientChoice(final List<Patient> list) {
+        final Label multipleChoice = new Label(
+            "Vous avez " + list.size() + " patients qui correspond à votre recherche.");
+        this.patientComboBox.setPromptText("[Aucun]");
+        this.patientComboBox.setConverter(new StringConverter<Patient>() {
+
+            @Override
+            public String toString(final Patient object) {
+                return object.getName();
+            }
+
+            @Override
+            public Patient fromString(final String string) {
+                return null;
+            }
+            
+        });
+        this.patientComboBox.getItems().setAll(list);
+        patientComboBox.getSelectionModel().selectedItemProperty().addListener(
+            (options, oldValue, newValue) -> {
+                controller.selectPatient(newValue);
+        });
+
+        this.searchResultPane.getChildren().setAll(multipleChoice, patientComboBox);
+    }
+
+    /**
+     * Update comboBox patient in HealthProfessionalBox View.
+     * @param patientList List<Patient>
+     */
+    public void updatePatient(final List<Patient> patientList) {
+        Patient oldPatient = this.patientComboBox.getSelectionModel().getSelectedItem();
+        this.patientComboBox.getItems().clear();
+        this.patientComboBox.setItems(FXCollections.observableArrayList(patientList));
+        if (this.patientComboBox.getItems().contains(oldPatient)) {
+            this.patientComboBox.getSelectionModel().selectItem(oldPatient);
+        }
+    }
+
+    /**
+     * Update View on Listended objects.
+     * @param evt PropertyChangeEvent
+     */
+    public void propertyChange(final PropertyChangeEvent evt) {
+        this.refresh();
+    }
+
+    /**
+     * Set and display patient when selected.
+     * @param p Patient.
+     */
+    public void setPatient(final Patient p) {
+        this.currentPatient = p;
+        //TODO: à quoi elle sert cette fonction ? 
+        refresh();
+        showPatientPrescription(p);
+        showPrescriptionTool();
+    }
+
+    /**
+     * Return HealthProfessionalBox Pane.
+     * @return Pane.
+     */
     public Pane asPane() {
         return this.healthProfessionalPane;
     }

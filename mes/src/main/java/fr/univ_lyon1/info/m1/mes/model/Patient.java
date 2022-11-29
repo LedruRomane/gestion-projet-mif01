@@ -56,11 +56,10 @@ public class Patient {
     /**
      * Add a prescription to the Patient.
      * 
-     * @param hp
-     * @param content
+     * @param p
      */
-    public void addPrescription(final HealthProfessional hp, final String content) {
-        prescriptions.add(new Prescription(hp, content));
+    public void addPrescription(final Prescription p) {
+        prescriptions.add(p);
         changes.firePropertyChange("prescription", null, this.getPrescriptions());
     }
 

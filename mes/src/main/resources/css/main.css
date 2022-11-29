@@ -1,0 +1,7 @@
+/*Color gradient*/
+.colorBackground {
+    -fx-border-color: linear-gradient(#0da2f9, #dc0f6c);
+    -fx-border-radius:0 0 10 10;
+    -fx-border-width: 0 4 4 4;
+}
+

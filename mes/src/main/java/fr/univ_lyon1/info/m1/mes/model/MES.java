@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.univ_lyon1.info.m1.mes.dao.PatientDao;
 import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
 
 public class MES {
@@ -145,9 +146,8 @@ public class MES {
      */
 
     public void createExampleConfiguration() {
-        final Patient a = createPatient("Alice Foo", "299010212345678");
-        final Patient b = createPatient("Bob Bar", "199010212345678");
-        final Patient c = createPatient("Charles Boz", "102020212345678");
+        PatientDao patientDao = new PatientDao();
+        Map<Integer, Patient> map = patientDao.findAll();
 
         final HealthProfessional w = createHealthProfessional(
                 HealthProfessionalType.PEDIATRICIAN,
@@ -159,14 +159,10 @@ public class MES {
                 HealthProfessionalType.PULMONOLOGIST,
                 "Dr. Epstein");
         createHealthProfessional(HealthProfessionalType.HOMEOPATH, "Dr. Hahnemann");
-
-        a.addPrescription(new Prescription(w, "One apple a day"));
-        b.addPrescription(new Prescription(w, "One apple a day"));
-        a.addPrescription(new Prescription(w, "Sport twice a week"));
-        b.addPrescription(new Prescription(w, "Whatever placebo, you're not sick"));
-        b.addPrescription(new Prescription(s, "Snake oil"));
-        b.addPrescription(new Prescription(p, "Snake oil"));
-        c.addPrescription(new Prescription(p, "apple ddd"));
+        for (Patient pa : map.values()) {
+            System.out.println(pa.getName());
+        }
+        
     }
 
     /**

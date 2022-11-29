@@ -1,12 +1,17 @@
 package fr.univ_lyon1.info.m1.mes;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.InputStream;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.jupiter.api.Test;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.model.MES;
@@ -74,6 +79,21 @@ public class HealthProTest {
         assertThat(prescriptions, not(
             hasItem(
                 hasProperty("content", equalTo("Do some sport")))));
+    }
+
+    @Test
+    public void whenLoadMultipleYAMLDocumentsThenLoadCorrectJavaObjects() {
+        Yaml yaml = new Yaml(new Constructor(Patient.class));
+        InputStream inputStream = this.getClass()
+        .getClassLoader()
+        .getResourceAsStream("data/patient.yml");
+
+        int count = 0;
+        for (Object object : yaml.loadAll(inputStream)) {
+            count++;
+            assertTrue(object instanceof Patient);
+        }
+        assertEquals(6, count);
     }
 
 }

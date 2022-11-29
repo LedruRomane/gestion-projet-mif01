@@ -1,0 +1,38 @@
+#healthProfessionals
+HealthProfessional:
+  - &1:
+    type: PEDIATRICIAN
+    name: Dr. Who
+  - &2:
+    type: DENTIST
+    name: Dr. Strange
+  - &3:
+    type: PULMONOLOGIST
+    name: Dr. Epstein
+  - &4:
+    type: NEUROSURGEON
+    name: Dr. Brain
+  - &5:
+    type: HOMEOPATH
+    name: Dr. Sugar
+
+#Prescriptions
+Prescription:
+  - 1:
+    hp: *1
+    content: One apple a day
+  - 2:
+    hp: *1
+    content: Sport twice a week
+  - 3:
+    hp: *3
+    content: Whatever placebo, you're not sick
+  - 4:
+    hp: *4
+    content: Snake oil
+  - 5:
+    hp: *4
+    content: apple*
+  - 6:
+    hp: *2
+    content: new bross teeth

@@ -72,7 +72,7 @@ public class PatientBox implements PropertyChangeListener {
             );
             final ImageView copie = new ImageView(image);
             final Label patientNameLabel = new Label(patient.getName());
-            final Label sSIDLabel = new Label(patient.getSSID());
+            final Label sSIDLabel = new Label(patient.getSsid());
             final MFXButton sSIDButton = new MFXButton("");
             final Label prescriptionTitleLabel = new Label("Mes prescriptions : ");
 
@@ -124,7 +124,7 @@ public class PatientBox implements PropertyChangeListener {
             sSIDButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(final ActionEvent event) {
-                    EasyClipboard.copy(patient.getSSID());
+                    EasyClipboard.copy(patient.getSsid());
                 }
             });
         }

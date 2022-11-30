@@ -103,6 +103,9 @@ public class HealthProfessionalBox implements PropertyChangeListener {
             searchComboBox.setMaxSize(150, 27);
             searchTextField.setMinSize(200, 27);
             searchTextField.setMaxSize(200, 27);
+            this.patientComboBox.setMinSize(150, 27);
+            this.patientComboBox.setMaxSize(150, 27);
+
 
             BorderBuilder border = new BorderBuilder();
             border.addFill(
@@ -169,7 +172,6 @@ public class HealthProfessionalBox implements PropertyChangeListener {
         final Label name = new Label(patient.getName());
         name.setFont(new Font("Arial", 18));
         VBox.setMargin(name, new Insets(10));
-        this.patientPane.getChildren().addAll(name);
         List<Prescription> prescriptions = this.controller.getPrescriptionsByPatient(patient);
 
         for (final Prescription prescription : prescriptions) {
@@ -180,7 +182,7 @@ public class HealthProfessionalBox implements PropertyChangeListener {
             this.prescriptionPane.getChildren().add(this.patientPrescriptionPane.asPane());
         }
         this.prescriptionsScroll.setContent(this.prescriptionPane);
-        this.patientPane.getChildren().add(this.prescriptionsScroll);
+        this.patientPane.getChildren().setAll(name, this.prescriptionsScroll);
        
     }
 
@@ -207,6 +209,9 @@ public class HealthProfessionalBox implements PropertyChangeListener {
 
             @Override
             public String toString(final Patient object) {
+                if (object == null) {
+                    return null;
+                }
                 return object.getName();
             }
 

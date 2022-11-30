@@ -7,6 +7,7 @@ import fr.univ_lyon1.info.m1.mes.controller.HealthProfessionalController;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
+import fr.univ_lyon1.info.m1.mes.utils.EasyAlert;
 import io.github.palexdev.materialfx.builders.layout.BorderBuilder;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
@@ -24,11 +25,8 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Alert.AlertType;
 
 public class HealthProfessionalBox implements PropertyChangeListener {
 
@@ -125,10 +123,7 @@ public class HealthProfessionalBox implements PropertyChangeListener {
                     patientPane.getChildren().clear();
                     if (searchComboBox.getValue() == null 
                     || searchTextField.getText().equals("")) {
-                        // TODO: easyalert
-                        Alert alert = new Alert(AlertType.ERROR,
-                            "Veuillez remplir tout les champs!", ButtonType.OK);
-                        alert.showAndWait();
+                        EasyAlert.alert("Erreur!", "Veuillez remplir tout les champs!");
                         return;
                     }
                     // TODO: Better
@@ -262,7 +257,6 @@ public class HealthProfessionalBox implements PropertyChangeListener {
      */
     public void setPatient(final Patient p) {
         this.currentPatient = p;
-        //TODO: à quoi elle sert cette fonction ? 
         refresh();
         showPatientPrescription(p);
         showPrescriptionTool();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
+import fr.univ_lyon1.info.m1.mes.model.HealthProfessionalFactory;
 import fr.univ_lyon1.info.m1.mes.model.MES;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
@@ -75,7 +76,11 @@ public class HealthProfessionalController {
     public HealthProfessional createHealthProfessional(
             final HealthProfessionalType model,
             final String name) {
-        return this.model.createHealthProfessional(model, name);
+        HealthProfessional newPro = HealthProfessionalFactory.createHealthProfessional(model, name);
+        if (this.model.addHealthProfessional(newPro)) {
+            return newPro;
+        }
+        return null;
     }
 
     /**

@@ -46,53 +46,34 @@ public class MES {
     }
 
     /**
-     * Create a new patient and return it.
-     *
-     * @param name
-     * @param ssID
-     * @return Patient
+     * Add a new patient to MES.
+     * 
+     * @param p
+     * @return boolean
      */
-    public Patient createPatient(final String name, final String ssID) {
-        final Patient p = new Patient(name, ssID);
-        patientsList.put(ssID, p);
+    public boolean addPatient(final Patient p) {
+        if (patientsList.containsKey(p.getSsid())) {
+            return false;
+        }
+        patientsList.put(p.getSsid(), p);
         changes.firePropertyChange("patientList", null, this.getPatients());
-        return p;
+        return true;
     }
 
     /**
-     * Create a new Health Professional and return it.
+     * Add a new health professional to MES.
      * 
-     * @param name
-     * @return HealthProfessional
+     * @param hp
+     * @return boolean
      */
-    public HealthProfessional createHealthProfessional(
-            final HealthProfessionalType model, final String name) {
-        HealthProfessional p = null;
-        switch (model) {
-            case PEDIATRICIAN:
-                p = new Pediatrician(name);
-                break;
-            case HOMEOPATH:
-                p = new Homeopath(name);
-                break;
-            case DENTIST:
-                p = new Dentist(name);
-                break;
-            case NEUROSURGEON:
-                p = new Neurosurgeon(name);
-                break;
-            case PULMONOLOGIST:
-                p = new Pulmonologist(name);
-                break;
-            default:
-                throw new Error("Unknown professional type");
+    public boolean addHealthProfessional(final HealthProfessional hp) {
+        if (healthProfessionalsList.contains(hp)) {
+            return false;
         }
-        healthProfessionalsList.add(p);
-        changes.firePropertyChange("healthList", 
-            null,
-            this.healthProfessionalsList);
-        return p;
-    };
+        healthProfessionalsList.add(hp);
+        changes.firePropertyChange("healthProfessionalList", null, this.getHealthProfessionals());
+        return true;
+    }
 
     /**
      * Find Patient by SSID.
@@ -149,18 +130,21 @@ public class MES {
         PatientDao patientDao = new PatientDao();
         Map<Integer, Patient> map = patientDao.findAll();
 
-        final HealthProfessional w = createHealthProfessional(
+        final HealthProfessional w = HealthProfessionalFactory.createHealthProfessional(
                 HealthProfessionalType.PEDIATRICIAN,
                 "Dr. Who");
-        final HealthProfessional s = createHealthProfessional(
+        final HealthProfessional s = HealthProfessionalFactory.createHealthProfessional(
                 HealthProfessionalType.DENTIST,
                 "Dr. Strange");
-        final HealthProfessional p = createHealthProfessional(
+        final HealthProfessional p = HealthProfessionalFactory.createHealthProfessional(
                 HealthProfessionalType.PULMONOLOGIST,
                 "Dr. Epstein");
-        createHealthProfessional(HealthProfessionalType.HOMEOPATH, "Dr. Hahnemann");
+        this.addHealthProfessional(w);
+        this.addHealthProfessional(s);
+        this.addHealthProfessional(p);
+
         for (Patient pa : map.values()) {
-            System.out.println(pa.getName());
+            this.addPatient(pa);
         }
         
     }

@@ -249,6 +249,11 @@ public class HealthProfessionalBox implements PropertyChangeListener {
      */
     public void propertyChange(final PropertyChangeEvent evt) {
         this.refresh();
+        if (evt.getPropertyName().equals("prescription")) {
+            patientPane.getChildren().clear();
+            showPatientPrescription(currentPatient);
+            showPrescriptionTool();
+        }
     }
 
     /**

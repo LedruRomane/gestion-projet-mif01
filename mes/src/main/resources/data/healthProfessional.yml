@@ -1,0 +1,14 @@
+  type: PEDIATRICIAN
+  name: Dr. Who
+---
+  type: DENTIST
+  name: Dr. Strange
+---
+  type: PULMONOLOGIST
+  name: Dr. Epstein
+---
+  type: NEUROSURGEON
+  name: Dr. Brain
+---
+  type: HOMEOPATH
+  name: Dr. Sugar

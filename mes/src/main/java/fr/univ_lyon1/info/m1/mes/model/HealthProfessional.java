@@ -5,22 +5,24 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class HealthProfessional {
-
+    private static Integer idCounter = 0;
     /*
      * Attributes
      */
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
     private final String name;
     private final ArrayList<Prescription> prefPrescriptions = new ArrayList<>();
+    private final Integer id;
 
     /*
      * Constructor
      * 
      * @param name
-     * @param mes
+     * @param id
      */
     public HealthProfessional(final String name) {
         this.name = name;
+        this.id = idCounter++;
     }
 
     /**
@@ -28,6 +30,13 @@ public class HealthProfessional {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return Integer
+     */
+    public Integer getId() {
+        return id;
     }
 
     /**

@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import fr.univ_lyon1.info.m1.mes.dao.PatientDao;
-import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
 
 public class MES {
 
@@ -24,7 +22,6 @@ public class MES {
      * Constructor.
      */
     public MES() {
-        this.createExampleConfiguration();
     }
 
     /**
@@ -119,34 +116,6 @@ public class MES {
             }
         }
         return resultat;
-    }
-
-    /**
-     * Create an example configuration for the current instance.
-     * 
-     */
-
-    public void createExampleConfiguration() {
-        PatientDao patientDao = new PatientDao();
-        Map<Integer, Patient> map = patientDao.findAll();
-
-        final HealthProfessional w = HealthProfessionalFactory.createHealthProfessional(
-                HealthProfessionalType.PEDIATRICIAN,
-                "Dr. Who");
-        final HealthProfessional s = HealthProfessionalFactory.createHealthProfessional(
-                HealthProfessionalType.DENTIST,
-                "Dr. Strange");
-        final HealthProfessional p = HealthProfessionalFactory.createHealthProfessional(
-                HealthProfessionalType.PULMONOLOGIST,
-                "Dr. Epstein");
-        this.addHealthProfessional(w);
-        this.addHealthProfessional(s);
-        this.addHealthProfessional(p);
-
-        for (Patient pa : map.values()) {
-            this.addPatient(pa);
-        }
-        
     }
 
     /**

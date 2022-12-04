@@ -89,24 +89,14 @@ public class HealthProfessionalController {
      * @param valeur Valeur de la recherche tapée par l'utilisateur.
      * @return List<Patient> La liste d'un ou des patients correspondants à la recherche.
      */
-    public List<Patient> getPatients(final String politique, final String valeur) {
+    public List<Patient> getPatients(
+        final String politique, final String valeur) {
         List<Patient> resultat = new ArrayList<Patient>();
-        switch (politique) {
-            case "N°patient":
-                Patient r = model.findPatientBySSID(valeur); //strict research
-                if (r != null) {
-                    resultat.add(r);
-                }
-                break;
-            case "Nom patient":
-                resultat = model.findPatientByName(valeur);
-                break;
-            case "Prescription":
-                resultat = model.findPatientsByPrescription(valeur);
-                break;
-            default:
-                break;
-        }
+        // Construct search strategy based on politique without switch
+      //  BaseStrategy strategy = politique.getStrategyClass();
+        // Cast to BaseStrategy
+        
+        
         return resultat;
     }
 

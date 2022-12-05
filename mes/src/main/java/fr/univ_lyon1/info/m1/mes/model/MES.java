@@ -80,7 +80,7 @@ public final class MES {
             return false;
         }
         healthProfessionalsList.add(hp);
-        changes.firePropertyChange("healthProfessionalList", null, this.getHealthProfessionals());
+        changes.firePropertyChange("healthList", null, this.getHealthProfessionals());
         return true;
     }
 

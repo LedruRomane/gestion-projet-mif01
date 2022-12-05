@@ -7,7 +7,6 @@ import fr.univ_lyon1.info.m1.mes.dao.PrescriptionDao;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.model.MES;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
-import fr.univ_lyon1.info.m1.mes.model.Prescription;
 import fr.univ_lyon1.info.m1.mes.view.MainView;
 import javafx.stage.Stage;
 
@@ -39,7 +38,6 @@ public class MainController {
 
         Map<String, Patient> mapPatient = patientDao.findAllPatients();
         Map<String, HealthProfessional> mapHp = healthProfessionalDao.findAllHealthProfessional();
-        Map<String, Prescription> mapPrescription = 
         prescriptionDao.findAllPrescription(mapHp, mapPatient);
 
         for (Patient pa : mapPatient.values()) {

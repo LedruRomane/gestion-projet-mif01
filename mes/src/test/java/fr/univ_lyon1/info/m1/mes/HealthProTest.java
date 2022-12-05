@@ -1,22 +1,25 @@
 package fr.univ_lyon1.info.m1.mes;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.InputStream;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.jupiter.api.Test;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
-import fr.univ_lyon1.info.m1.mes.model.MES;
+import fr.univ_lyon1.info.m1.mes.model.HealthProfessionalFactory;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
 import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
 
 public class HealthProTest {
-    private MES model = new MES();
-
     @Test
     /*
      * A simple test, purposely broken so that students can see what happens for
@@ -39,10 +42,10 @@ public class HealthProTest {
      */
     public void getPrescriptionTest() {
         // Given
-        HealthProfessional hp = model.createHealthProfessional(
+        HealthProfessional hp =  HealthProfessionalFactory.createHealthProfessional(
             HealthProfessionalType.PULMONOLOGIST, 
             "Dr. Smith");
-        Patient p = model.createPatient("Alice", "20123456789012");
+        Patient p = new Patient("Alice", "20123456789012");
         p.addPrescription(new Prescription(hp, "Do some sport"));
 
         // When
@@ -61,10 +64,10 @@ public class HealthProTest {
      */
     public void getNotPrescriptionTest() {
         // Given
-        HealthProfessional hp = model.createHealthProfessional(
+        HealthProfessional hp = HealthProfessionalFactory.createHealthProfessional(
             HealthProfessionalType.DENTIST, 
             "Dr. Smith");
-        Patient p = model.createPatient("Alice", "20123456789012");
+        Patient p = new Patient("Alice", "20123456789012");
         p.addPrescription(new Prescription(hp, "Eat fruits"));
 
         // When
@@ -74,6 +77,21 @@ public class HealthProTest {
         assertThat(prescriptions, not(
             hasItem(
                 hasProperty("content", equalTo("Do some sport")))));
+    }
+
+    @Test
+    public void whenLoadMultipleYAMLDocumentsThenLoadCorrectJavaObjects() {
+        Yaml yaml = new Yaml(new Constructor(Patient.class));
+        InputStream inputStream = this.getClass()
+        .getClassLoader()
+        .getResourceAsStream("data/patient.yml");
+
+        int count = 0;
+        for (Object object : yaml.loadAll(inputStream)) {
+            count++;
+            assertTrue(object instanceof Patient);
+        }
+        assertEquals(6, count);
     }
 
 }

@@ -12,18 +12,21 @@ public class Patient {
      */
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
     private final List<Prescription> prescriptions = new ArrayList<>();
-    private final String name;
-    private final String ssID;
+    private String name;
+    private String ssid;
 
     /**
      * Patient Constructor.
-     * 
      * @param name
-     * @param ssID
+     * @param ssid
      */
-    public Patient(final String name, final String ssID) {
+    public Patient(final String name, final String ssid) {
         this.name = name;
-        this.ssID = ssID;
+        this.ssid = ssid;
+    }
+
+    public Patient() {
+
     }
 
     /**
@@ -36,12 +39,28 @@ public class Patient {
     }
 
     /**
-     * Get Patient SSID.
+     * Get Patient ssid.
      * 
      * @return String
      */
-    public String getSSID() {
-        return ssID;
+    public String getSsid() {
+        return ssid;
+    }
+
+    /**
+     * Set Patient name.
+     * @param name String
+     */
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    /**
+     * Set Patient ssid.
+     * @param ssid String
+     */
+    public void setSsid(final String ssid) {
+        this.ssid = ssid;
     }
 
     /**

@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
+import fr.univ_lyon1.info.m1.mes.model.HealthProfessionalFactory;
 import fr.univ_lyon1.info.m1.mes.model.MES;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
 import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
+import fr.univ_lyon1.info.m1.mes.types.PatientSearchStrategyType;
 import fr.univ_lyon1.info.m1.mes.view.HealthProfessionalView;
 
 public class HealthProfessionalController {
@@ -75,7 +77,11 @@ public class HealthProfessionalController {
     public HealthProfessional createHealthProfessional(
             final HealthProfessionalType model,
             final String name) {
-        return this.model.createHealthProfessional(model, name);
+        HealthProfessional newPro = HealthProfessionalFactory.createHealthProfessional(model, name);
+        if (this.model.addHealthProfessional(newPro)) {
+            return newPro;
+        }
+        return null;
     }
 
     /**
@@ -84,24 +90,12 @@ public class HealthProfessionalController {
      * @param valeur Valeur de la recherche tapée par l'utilisateur.
      * @return List<Patient> La liste d'un ou des patients correspondants à la recherche.
      */
-    public List<Patient> getPatients(final String politique, final String valeur) {
+    public List<Patient> getPatients(
+        final PatientSearchStrategyType politique, final String valeur) {
         List<Patient> resultat = new ArrayList<Patient>();
-        switch (politique) {
-            case "N°patient":
-                Patient r = model.findPatientBySSID(valeur); //strict research
-                if (r != null) {
-                    resultat.add(r);
-                }
-                break;
-            case "Nom patient":
-                resultat = model.findPatientByName(valeur);
-                break;
-            case "Prescription":
-                resultat = model.findPatientsByPrescription(valeur);
-                break;
-            default:
-                break;
-        }
+        politique.getStrategyClass().search(this.model.getPatients(), valeur).forEach((patient) -> {
+            resultat.add(patient);
+        });
         return resultat;
     }
 

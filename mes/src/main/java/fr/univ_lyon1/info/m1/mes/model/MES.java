@@ -7,9 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
 
-public class MES {
+public final class MES {
 
     /**
      * Attributes.
@@ -18,12 +17,23 @@ public class MES {
     private final List<HealthProfessional> healthProfessionalsList = new ArrayList<>();
     private final Map<String, Patient> patientsList = new HashMap<>();
 
+    private static MES singleInstance = null;
 
     /**
      * Constructor.
      */
-    public MES() {
-        this.createExampleConfiguration();
+    private MES() {
+    }
+
+    /**
+     * Singleton.
+     * @return the instance of MES.
+     */
+    public static MES getInstance() {
+        if (singleInstance == null) {
+            singleInstance = new MES();
+        }
+        return singleInstance;
     }
 
     /**
@@ -45,53 +55,34 @@ public class MES {
     }
 
     /**
-     * Create a new patient and return it.
-     *
-     * @param name
-     * @param ssID
-     * @return Patient
+     * Add a new patient to MES.
+     * 
+     * @param p
+     * @return boolean
      */
-    public Patient createPatient(final String name, final String ssID) {
-        final Patient p = new Patient(name, ssID);
-        patientsList.put(ssID, p);
+    public boolean addPatient(final Patient p) {
+        if (patientsList.containsKey(p.getSsid())) {
+            return false;
+        }
+        patientsList.put(p.getSsid(), p);
         changes.firePropertyChange("patientList", null, this.getPatients());
-        return p;
+        return true;
     }
 
     /**
-     * Create a new Health Professional and return it.
+     * Add a new health professional to MES.
      * 
-     * @param name
-     * @return HealthProfessional
+     * @param hp
+     * @return boolean
      */
-    public HealthProfessional createHealthProfessional(
-            final HealthProfessionalType model, final String name) {
-        HealthProfessional p = null;
-        switch (model) {
-            case PEDIATRICIAN:
-                p = new Pediatrician(name);
-                break;
-            case HOMEOPATH:
-                p = new Homeopath(name);
-                break;
-            case DENTIST:
-                p = new Dentist(name);
-                break;
-            case NEUROSURGEON:
-                p = new Neurosurgeon(name);
-                break;
-            case PULMONOLOGIST:
-                p = new Pulmonologist(name);
-                break;
-            default:
-                throw new Error("Unknown professional type");
+    public boolean addHealthProfessional(final HealthProfessional hp) {
+        if (healthProfessionalsList.contains(hp)) {
+            return false;
         }
-        healthProfessionalsList.add(p);
-        changes.firePropertyChange("healthList", 
-            null,
-            this.healthProfessionalsList);
-        return p;
-    };
+        healthProfessionalsList.add(hp);
+        changes.firePropertyChange("healthList", null, this.getHealthProfessionals());
+        return true;
+    }
 
     /**
      * Find Patient by SSID.
@@ -137,36 +128,6 @@ public class MES {
             }
         }
         return resultat;
-    }
-
-    /**
-     * Create an example configuration for the current instance.
-     * 
-     */
-
-    public void createExampleConfiguration() {
-        final Patient a = createPatient("Alice Foo", "299010212345678");
-        final Patient b = createPatient("Bob Bar", "199010212345678");
-        final Patient c = createPatient("Charles Boz", "102020212345678");
-
-        final HealthProfessional w = createHealthProfessional(
-                HealthProfessionalType.PEDIATRICIAN,
-                "Dr. Who");
-        final HealthProfessional s = createHealthProfessional(
-                HealthProfessionalType.DENTIST,
-                "Dr. Strange");
-        final HealthProfessional p = createHealthProfessional(
-                HealthProfessionalType.PULMONOLOGIST,
-                "Dr. Epstein");
-        createHealthProfessional(HealthProfessionalType.HOMEOPATH, "Dr. Hahnemann");
-
-        a.addPrescription(new Prescription(w, "One apple a day"));
-        b.addPrescription(new Prescription(w, "One apple a day"));
-        a.addPrescription(new Prescription(w, "Sport twice a week"));
-        b.addPrescription(new Prescription(w, "Whatever placebo, you're not sick"));
-        b.addPrescription(new Prescription(s, "Snake oil"));
-        b.addPrescription(new Prescription(p, "Snake oil"));
-        c.addPrescription(new Prescription(p, "apple ddd"));
     }
 
     /**

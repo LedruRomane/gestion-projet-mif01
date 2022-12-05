@@ -15,7 +15,7 @@ public class App extends Application {
      */
     @Override
     public void start(final Stage stage) throws Exception {
-        final MES app = new MES();
+        final MES app = MES.getInstance();
         new MainController(app);
         new MainController(app);
     }

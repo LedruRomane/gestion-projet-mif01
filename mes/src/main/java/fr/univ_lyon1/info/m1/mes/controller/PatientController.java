@@ -27,7 +27,11 @@ public class PatientController {
     }
 
     public Patient createPatient(final String name, final String ssid) {
-        return model.createPatient(name, ssid);
+        Patient newPatient = new Patient(name, ssid);
+        if (model.addPatient(newPatient)) {
+            return newPatient;
+        }
+        return null;
     }
 
     public void deletePrescription(final Prescription p) {

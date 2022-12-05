@@ -7,6 +7,8 @@ import fr.univ_lyon1.info.m1.mes.controller.HealthProfessionalController;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
+import fr.univ_lyon1.info.m1.mes.types.PatientSearchStrategyType;
+import fr.univ_lyon1.info.m1.mes.utils.EasyAlert;
 import io.github.palexdev.materialfx.builders.layout.BorderBuilder;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
@@ -24,11 +26,8 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Alert.AlertType;
 
 public class HealthProfessionalBox implements PropertyChangeListener {
 
@@ -71,9 +70,10 @@ public class HealthProfessionalBox implements PropertyChangeListener {
             //Content
             final Label healthProfessionalNameLabel = new Label(this.professional.getName());
             final Label searchPatientLabel = new Label("Rechercher patient : ");
-            final String[] listChoices = {"N°patient", "Nom patient", "Prescription"};
-            final MFXComboBox<String> searchComboBox = new MFXComboBox<String>();
-            searchComboBox.setItems(FXCollections.observableArrayList(listChoices));
+            final MFXComboBox<PatientSearchStrategyType> searchComboBox = 
+                new MFXComboBox<PatientSearchStrategyType>();
+            searchComboBox.setItems(FXCollections.observableArrayList(
+                (PatientSearchStrategyType.values())));
             searchComboBox.setPromptText("Type recherche");
             final MFXTextField searchTextField = new MFXTextField();
             final MFXButton searchButton = new MFXButton("Rechercher");
@@ -105,6 +105,9 @@ public class HealthProfessionalBox implements PropertyChangeListener {
             searchComboBox.setMaxSize(150, 27);
             searchTextField.setMinSize(200, 27);
             searchTextField.setMaxSize(200, 27);
+            this.patientComboBox.setMinSize(150, 27);
+            this.patientComboBox.setMaxSize(150, 27);
+
 
             BorderBuilder border = new BorderBuilder();
             border.addFill(
@@ -125,10 +128,7 @@ public class HealthProfessionalBox implements PropertyChangeListener {
                     patientPane.getChildren().clear();
                     if (searchComboBox.getValue() == null 
                     || searchTextField.getText().equals("")) {
-                        // TODO: easyalert
-                        Alert alert = new Alert(AlertType.ERROR,
-                            "Veuillez remplir tout les champs!", ButtonType.OK);
-                        alert.showAndWait();
+                        EasyAlert.alert("Erreur!", "Veuillez remplir tout les champs!");
                         return;
                     }
                     // TODO: Better
@@ -174,7 +174,6 @@ public class HealthProfessionalBox implements PropertyChangeListener {
         final Label name = new Label(patient.getName());
         name.setFont(new Font("Arial", 18));
         VBox.setMargin(name, new Insets(10));
-        this.patientPane.getChildren().addAll(name);
         List<Prescription> prescriptions = this.controller.getPrescriptionsByPatient(patient);
 
         for (final Prescription prescription : prescriptions) {
@@ -185,7 +184,7 @@ public class HealthProfessionalBox implements PropertyChangeListener {
             this.prescriptionPane.getChildren().add(this.patientPrescriptionPane.asPane());
         }
         this.prescriptionsScroll.setContent(this.prescriptionPane);
-        this.patientPane.getChildren().add(this.prescriptionsScroll);
+        this.patientPane.getChildren().setAll(name, this.prescriptionsScroll);
        
     }
 
@@ -212,6 +211,9 @@ public class HealthProfessionalBox implements PropertyChangeListener {
 
             @Override
             public String toString(final Patient object) {
+                if (object == null) {
+                    return null;
+                }
                 return object.getName();
             }
 
@@ -249,6 +251,11 @@ public class HealthProfessionalBox implements PropertyChangeListener {
      */
     public void propertyChange(final PropertyChangeEvent evt) {
         this.refresh();
+        if (evt.getPropertyName().equals("prescription")) {
+            patientPane.getChildren().clear();
+            showPatientPrescription(currentPatient);
+            showPrescriptionTool();
+        }
     }
 
     /**
@@ -257,7 +264,6 @@ public class HealthProfessionalBox implements PropertyChangeListener {
      */
     public void setPatient(final Patient p) {
         this.currentPatient = p;
-        //TODO: à quoi elle sert cette fonction ? 
         refresh();
         showPatientPrescription(p);
         showPrescriptionTool();

@@ -37,11 +37,19 @@ public class PatientView implements PropertyChangeListener {
     }
 
     /**
-     * Update View on Listended objects.
+     * Mise à jour de la liste des patients.
      * @param evt PropertyChangeEvent
      */
-    // TODO: envoyer mail prof
+    // Le cast est safe car on a vérifié que c'était une liste de Patient
+    @SuppressWarnings("unchecked")
     public void propertyChange(final PropertyChangeEvent evt) {
+        if (evt.getNewValue() instanceof List<?>) {
+            for (Object o : (List<?>) evt.getNewValue()) {
+                if (!(o instanceof Patient)) {
+                    return;
+                }
+            }
+        }
         this.patientSelect.updatePatient((List<Patient>) evt.getNewValue());
     }
 

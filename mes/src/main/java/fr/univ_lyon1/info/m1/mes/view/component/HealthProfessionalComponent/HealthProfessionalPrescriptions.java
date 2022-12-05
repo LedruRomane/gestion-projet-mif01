@@ -17,10 +17,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.collections.FXCollections;
 import javafx.util.StringConverter;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
@@ -171,18 +168,12 @@ public class HealthProfessionalPrescriptions implements PropertyChangeListener {
                 }
                 if (createTextField.getText().isBlank() 
                 && prefPrescriptionComboBox.getSelectedItem() == null) {
-                    //TODO: EASYALERT
-                    Alert alert = new Alert(AlertType.ERROR,
-                    "Veuillez selectionner ou remplir une prescription !", ButtonType.OK);
-                    alert.showAndWait();
+                    EasyAlert.alert("Erreur!", 
+                        "Veuillez selectionner ou remplir une prescription !");
                     return;
                 }
             }
         });
-    }
-    
-    private void getPrescriptions() {
-        //TODO Va chercher les prescriptions de base du médecin courant.
     }
 
     /**

@@ -52,13 +52,15 @@ public class PrescriptionDao extends Dao<Prescription> {
                     content = (String) mapObject.get("content");
                 }
             }
-            if (hp != null && patient != null && content != null) {
+            if (idMap != null
+                && hp != null
+                && patient != null 
+                && content != null) {
                 Prescription p = new Prescription(mapHp.get(hp), content);
                 mapPatient.get(patient).addPrescription(p);
                 map.put(idMap, p);
             }
         }
-        System.out.println(map);
         return map;
     }
 }

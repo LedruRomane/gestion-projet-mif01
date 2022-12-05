@@ -9,6 +9,7 @@ import fr.univ_lyon1.info.m1.mes.model.MES;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
 import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
+import fr.univ_lyon1.info.m1.mes.types.PatientSearchStrategyType;
 import fr.univ_lyon1.info.m1.mes.view.HealthProfessionalView;
 
 public class HealthProfessionalController {
@@ -90,13 +91,11 @@ public class HealthProfessionalController {
      * @return List<Patient> La liste d'un ou des patients correspondants à la recherche.
      */
     public List<Patient> getPatients(
-        final String politique, final String valeur) {
+        final PatientSearchStrategyType politique, final String valeur) {
         List<Patient> resultat = new ArrayList<Patient>();
-        // Construct search strategy based on politique without switch
-      //  BaseStrategy strategy = politique.getStrategyClass();
-        // Cast to BaseStrategy
-        
-        
+        politique.getStrategyClass().search(this.model.getPatients(), valeur).forEach((patient) -> {
+            resultat.add(patient);
+        });
         return resultat;
     }
 

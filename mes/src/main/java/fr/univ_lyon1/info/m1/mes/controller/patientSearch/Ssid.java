@@ -7,8 +7,8 @@ import java.util.Map;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 
 public class Ssid extends BaseStrategy {
-    public Ssid(final Map<String, Patient> e) {
-        super(e);
+    public Ssid() {
+        super();
     }
     
     @Override
@@ -16,11 +16,19 @@ public class Ssid extends BaseStrategy {
         return "SSID";
     }
     
+    /**
+     * Search for a patient by SSID.
+     * @param e The list of patients.
+     * @param search The SSID to search.
+     * @return The list of patients matching the search.
+     */
     @Override
-    public List<Patient> search(final String search) {
+    public List<Patient> search(final List<Patient> e, final String search) {
         List<Patient> output = new ArrayList<Patient>();
-        if (this.getPatientsList().containsKey(search)) {
-            output.add(this.getPatientsList().get(search));
+        for (Patient p : e) {
+            if (p.getSsid().equals(search)) {
+                output.add(p);
+            }
         }
         return output;
     }

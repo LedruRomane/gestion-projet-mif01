@@ -7,6 +7,8 @@ import fr.univ_lyon1.info.m1.mes.controller.HealthProfessionalController;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
+import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
+import fr.univ_lyon1.info.m1.mes.types.PatientSearchStrategyType;
 import io.github.palexdev.materialfx.builders.layout.BorderBuilder;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
@@ -71,9 +73,8 @@ public class HealthProfessionalBox implements PropertyChangeListener {
             //Content
             final Label healthProfessionalNameLabel = new Label(this.professional.getName());
             final Label searchPatientLabel = new Label("Rechercher patient : ");
-            final String[] listChoices = {"N°patient", "Nom patient", "Prescription"};
-            final MFXComboBox<String> searchComboBox = new MFXComboBox<String>();
-            searchComboBox.setItems(FXCollections.observableArrayList(listChoices));
+            final MFXComboBox<PatientSearchStrategyType> searchComboBox = new MFXComboBox<PatientSearchStrategyType>();
+            searchComboBox.setItems(FXCollections.observableArrayList( (PatientSearchStrategyType.values())));
             searchComboBox.setPromptText("Type recherche");
             final MFXTextField searchTextField = new MFXTextField();
             final MFXButton searchButton = new MFXButton("Rechercher");

@@ -8,8 +8,8 @@ import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
 
 public class Prescriptions extends BaseStrategy {
-    public Prescriptions(final Map<String, Patient> e) {
-        super(e);
+    public Prescriptions() {
+        super();
     }
 
     @Override
@@ -17,14 +17,19 @@ public class Prescriptions extends BaseStrategy {
         return "Prescription";
     }
     
+    /**
+     * Search for a patient by prescription.
+     * @param e The list of patients.
+     * @param search The prescription to search.
+     * @return The list of patients matching the search.
+     */
     @Override
-    public List<Patient> search(final String search) {
+    public List<Patient> search(final List<Patient> e, final String search) {
         List<Patient> output = new ArrayList<Patient>();
-        for (Patient p : this.getPatientsList().values()) {
-            for (Prescription e : p.getPrescriptions()) {
-                if (e.getContent().contains(search)) {
+        for (Patient p : e) {
+            for (Prescription pr : p.getPrescriptions()) {
+                if (pr.getContent().contains(search)) {
                     output.add(p);
-                    break;
                 }
             }
         }

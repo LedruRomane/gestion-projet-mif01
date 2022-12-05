@@ -13,7 +13,8 @@ import fr.univ_lyon1.info.m1.mes.model.Prescription;
 public class PrescriptionDao extends Dao<Prescription> {
 
     public Prescription find(final String id) {
-        return new Prescription(null, null); //TODO
+        //useless
+        return new Prescription(null, id);
     }
 
     public Map<String, Prescription> findAllPrescription(

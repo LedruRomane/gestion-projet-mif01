@@ -3,9 +3,11 @@ import java.util.Map;
 
 import fr.univ_lyon1.info.m1.mes.dao.HealthProfessionalDao;
 import fr.univ_lyon1.info.m1.mes.dao.PatientDao;
+import fr.univ_lyon1.info.m1.mes.dao.PrescriptionDao;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.model.MES;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
+import fr.univ_lyon1.info.m1.mes.model.Prescription;
 import fr.univ_lyon1.info.m1.mes.view.MainView;
 import javafx.stage.Stage;
 
@@ -31,11 +33,13 @@ public class MainController {
      */
     public void createExampleConfiguration() {
         PatientDao patientDao = new PatientDao();
-        HealthProfessionalDao healthProfessionaldao = new HealthProfessionalDao();
+        HealthProfessionalDao healthProfessionalDao = new HealthProfessionalDao();
+        PrescriptionDao prescriptionDao = new PrescriptionDao();
 
-        Map<Integer, Patient> mapPatient = patientDao.findAll();
-        Map<Integer, HealthProfessional> mapHp = healthProfessionaldao.findAllHealthProfessional();
-
+        Map<String, Patient> mapPatient = patientDao.findAllPatients();
+        Map<String, HealthProfessional> mapHp = healthProfessionalDao.findAllHealthProfessional();
+        Map<String, Prescription> mapPrescription = 
+        prescriptionDao.findAllPrescription(mapHp, mapPatient);
 
         for (Patient pa : mapPatient.values()) {
             this.model.addPatient(pa);
@@ -44,6 +48,5 @@ public class MainController {
         for (HealthProfessional hp : mapHp.values()) {
             this.model.addHealthProfessional(hp);
         }
-        
     }
 }

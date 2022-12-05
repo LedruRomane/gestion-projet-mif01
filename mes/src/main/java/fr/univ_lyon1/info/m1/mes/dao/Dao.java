@@ -7,7 +7,7 @@ public abstract class Dao<T> {
      * @param id
      * @return
      */
-    public abstract T find(Integer id);
+    public abstract T find(String id);
     
 }
 

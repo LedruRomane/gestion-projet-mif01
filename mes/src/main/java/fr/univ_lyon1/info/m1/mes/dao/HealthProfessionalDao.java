@@ -12,29 +12,33 @@ import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
 
 public class HealthProfessionalDao extends Dao<HealthProfessional> {
 
-    public HealthProfessional find(final Integer id) {
-        Map<Integer, HealthProfessional> map = this.findAllHealthProfessional();
+    public HealthProfessional find(final String id) {
+        Map<String, HealthProfessional> map = this.findAllHealthProfessional();
         HealthProfessional p = map.get(id);
         return p;
     }
 
     
-    public Map<Integer, HealthProfessional> findAllHealthProfessional() {
+    public Map<String, HealthProfessional> findAllHealthProfessional() {
+
         final Yaml yaml = new Yaml();
         final InputStream inputStream = this.getClass()
         .getClassLoader()
         .getResourceAsStream("data/healthProfessional.yml");
-        Map<Integer, HealthProfessional> map = new HashMap<Integer, HealthProfessional>();
+        Map<String, HealthProfessional> map = new HashMap<String, HealthProfessional>();
+        String id = null;
 
-        Integer i = 0;
         for (Object object : yaml.loadAll(inputStream)) {
-            i++;
+
             String typeString = null;
             String nameString = null;
 
             // check cast safety of object
             if (object instanceof Map<?, ?>) {
                 Map<?, ?> mapObject = (Map<?, ?>) object;
+                if (mapObject.containsKey("id") && mapObject.get("id") instanceof String) {
+                    id = (String) mapObject.get("id");
+                }
                 if (mapObject.containsKey("type") && mapObject.get("type") instanceof String) {
                     typeString = (String) mapObject.get("type");
                 }
@@ -47,7 +51,7 @@ public class HealthProfessionalDao extends Dao<HealthProfessional> {
                 HealthProfessional p = HealthProfessionalFactory.createHealthProfessional(
                     type, 
                     nameString);
-                map.put(i, p);
+                map.put(id, p);
             }
         }
         return map;

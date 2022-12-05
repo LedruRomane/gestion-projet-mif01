@@ -1,14 +1,19 @@
+  id: "1"
   type: PEDIATRICIAN
   name: Dr. Who
 ---
+  id: "2"
   type: DENTIST
   name: Dr. Strange
 ---
+  id: "3"
   type: PULMONOLOGIST
   name: Dr. Epstein
 ---
+  id: "4"
   type: NEUROSURGEON
   name: Dr. Brain
 ---
+  id: "5"
   type: HOMEOPATH
   name: Dr. Sugar

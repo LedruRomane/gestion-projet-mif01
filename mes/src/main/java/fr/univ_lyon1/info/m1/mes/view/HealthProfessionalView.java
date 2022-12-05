@@ -45,8 +45,15 @@ public class HealthProfessionalView implements PropertyChangeListener {
      * Update View on Listended objects.
      * @param evt PropertyChangeEvent
      */
+    @SuppressWarnings("unchecked")
     public void propertyChange(final PropertyChangeEvent evt) {
-        //TODO : check type evt.getNewValue()
+        if (evt.getNewValue() instanceof List<?>) {
+            for (Object o : (List<?>) evt.getNewValue()) {
+                if (!(o instanceof HealthProfessional)) {
+                    return;
+                }
+            }
+        }
         this.healthProfessionalSelect.updateHealthProfessional(
             (List<HealthProfessional>) evt.getNewValue());
     }

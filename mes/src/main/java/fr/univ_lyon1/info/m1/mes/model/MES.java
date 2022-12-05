@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MES {
+public final class MES {
 
     /**
      * Attributes.
@@ -17,11 +17,23 @@ public class MES {
     private final List<HealthProfessional> healthProfessionalsList = new ArrayList<>();
     private final Map<String, Patient> patientsList = new HashMap<>();
 
+    private static MES singleInstance = null;
 
     /**
      * Constructor.
      */
-    public MES() {
+    private MES() {
+    }
+
+    /**
+     * Singleton.
+     * @return the instance of MES.
+     */
+    public static MES getInstance() {
+        if (singleInstance == null) {
+            singleInstance = new MES();
+        }
+        return singleInstance;
     }
 
     /**

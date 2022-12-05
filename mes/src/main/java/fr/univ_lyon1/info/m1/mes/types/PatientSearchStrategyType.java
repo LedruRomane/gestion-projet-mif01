@@ -2,8 +2,6 @@ package fr.univ_lyon1.info.m1.mes.types;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
 
 import fr.univ_lyon1.info.m1.mes.controller.patientSearch.BaseStrategy;
 
@@ -20,7 +18,9 @@ public enum PatientSearchStrategyType {
             Constructor<?> constructor = clazz.getConstructor();
             Object instance = constructor.newInstance();
             c = (BaseStrategy) instance;
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException 
+        | ClassNotFoundException | NoSuchMethodException 
+        | SecurityException | IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }

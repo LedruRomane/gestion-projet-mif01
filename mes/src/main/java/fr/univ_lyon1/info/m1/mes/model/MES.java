@@ -126,36 +126,6 @@ public final class MES {
     }
 
     /**
-     * Create an example configuration for the current instance.
-     * 
-     */
-
-    public void createExampleConfiguration() {
-        final Patient a = createPatient("Alice Foo", "299010212345678");
-        final Patient b = createPatient("Bob Bar", "199010212345678");
-        final Patient c = createPatient("Charles Boz", "102020212345678");
-
-        final HealthProfessional w = createHealthProfessional(
-                HealthProfessionalType.PEDIATRICIAN,
-                "Dr. Who");
-        final HealthProfessional s = createHealthProfessional(
-                HealthProfessionalType.DENTIST,
-                "Dr. Strange");
-        final HealthProfessional p = createHealthProfessional(
-                HealthProfessionalType.PULMONOLOGIST,
-                "Dr. Epstein");
-        createHealthProfessional(HealthProfessionalType.HOMEOPATH, "Dr. Hahnemann");
-
-        a.addPrescription(new Prescription(w, "One apple a day"));
-        b.addPrescription(new Prescription(w, "One apple a day"));
-        a.addPrescription(new Prescription(w, "Sport twice a week"));
-        b.addPrescription(new Prescription(w, "Whatever placebo, you're not sick"));
-        b.addPrescription(new Prescription(s, "Snake oil"));
-        b.addPrescription(new Prescription(p, "Snake oil"));
-        c.addPrescription(new Prescription(p, "apple ddd"));
-    }
-
-    /**
      * Ajout d'un object d'écoute sur MES.
      * @param name
      * @param l

@@ -11,15 +11,14 @@ import org.junit.jupiter.api.Test;
 import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
 
 public class PatientTest {
-    private MES model = new MES();
     
     @Test
     void addPrescriptionTest() {
          // Given
-         HealthProfessional hp = model.createHealthProfessional(
+         HealthProfessional hp = HealthProfessionalFactory.createHealthProfessional(
             HealthProfessionalType.PULMONOLOGIST, 
             "Dr. Smith");
-        Patient p = model.createPatient("Alice", "20123456789012");
+        Patient p = new Patient("Alice", "20123456789012");
         p.addPrescription(new Prescription(hp, "Do some sport"));
 
         // When
@@ -48,7 +47,7 @@ public class PatientTest {
          Patient patient = new Patient("Patient Test", "1234567890");
 
          // When
-         String ssid = patient.getSSID();
+         String ssid = patient.getSsid();
  
          // Then
          assertThat(ssid, is("1234567890"));
@@ -57,10 +56,10 @@ public class PatientTest {
     @Test
     void getPrescriptionsTest() {
         // Given
-        HealthProfessional hp = model.createHealthProfessional(
+        HealthProfessional hp = HealthProfessionalFactory.createHealthProfessional(
             HealthProfessionalType.DENTIST, 
             "Dr. Smith");
-        Patient p = model.createPatient("Alice", "20123456789012");
+        Patient p = new Patient("Alice", "20123456789012");
         p.addPrescription(new Prescription(hp, "Eat fruits"));
 
         // When
@@ -74,10 +73,10 @@ public class PatientTest {
     @Test
     public void getNotPrescriptionTest() {
         // Given
-        HealthProfessional hp = model.createHealthProfessional(
+        HealthProfessional hp = HealthProfessionalFactory.createHealthProfessional(
             HealthProfessionalType.DENTIST, 
             "Dr. Smith");
-        Patient p = model.createPatient("Alice", "20123456789012");
+        Patient p = new Patient("Alice", "20123456789012");
         p.addPrescription(new Prescription(hp, "Eat fruits"));
 
         // When
@@ -92,11 +91,11 @@ public class PatientTest {
     @Test
     public void getNotPrescriptionForAnotherPatientTest() {
         // Given
-        HealthProfessional hp = model.createHealthProfessional(
+        HealthProfessional hp = HealthProfessionalFactory.createHealthProfessional(
             HealthProfessionalType.DENTIST, 
             "Dr. Smith");
-        Patient p = model.createPatient("Alice", "20123456789012");
-        Patient p2 = model.createPatient("Toto", "442426517645254");
+        Patient p = new Patient("Alice", "20123456789012");
+        Patient p2 = new Patient("Toto", "442426517645254");
 
         p.addPrescription(new Prescription(hp, "Eat fruits"));
 
@@ -112,10 +111,10 @@ public class PatientTest {
     @Test
     void removePrescriptionTest() {
         // Given
-        HealthProfessional hp = model.createHealthProfessional(
+        HealthProfessional hp = HealthProfessionalFactory.createHealthProfessional(
             HealthProfessionalType.DENTIST, 
             "Dr. Smith");
-        Patient p = model.createPatient("Alice", "20123456789012");
+        Patient p = new Patient("Alice", "20123456789012");
         Prescription pr = new Prescription(hp, "Eat fruits");
         p.addPrescription(pr);
 
@@ -136,11 +135,11 @@ public class PatientTest {
     @Test
     void removePrescriptionForOnlyOnePatientTest() {
         // Given
-        HealthProfessional hp = model.createHealthProfessional(
+        HealthProfessional hp = HealthProfessionalFactory.createHealthProfessional(
             HealthProfessionalType.DENTIST, 
             "Dr. Smith");
-        Patient p = model.createPatient("Alice", "20123456789012");
-        Patient p2 = model.createPatient("Toto", "442426517645254");
+        Patient p = new Patient("Alice", "20123456789012");
+        Patient p2 = new Patient("Toto", "442426517645254");
         Prescription pr = new Prescription(hp, "Eat fruits");
         p.addPrescription(pr);
         p2.addPrescription(pr);

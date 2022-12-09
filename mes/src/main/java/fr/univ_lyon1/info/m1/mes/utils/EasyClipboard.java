@@ -10,4 +10,8 @@ public interface EasyClipboard {
         content.putString(data);
         clipboard.setContent(content);
     }
+    static String read() {
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        return clipboard.getString();
+    }
 }

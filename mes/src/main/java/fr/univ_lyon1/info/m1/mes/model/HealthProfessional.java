@@ -53,6 +53,7 @@ public class HealthProfessional {
      */
     public void addPrefPrescription(final Prescription prescription) {
         this.prefPrescriptions.add(prescription);
+        changes.firePropertyChange("prescription", null, prefPrescriptions);
     }
 
     /**

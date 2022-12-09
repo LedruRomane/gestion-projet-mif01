@@ -80,52 +80,6 @@ public final class MES {
     }
 
     /**
-     * Find Patient by SSID.
-     * @param ssID String
-     * @return Patient or null.
-     */
-    public Patient findPatientBySSID(final String ssID) {
-        Patient resultat = null;
-        if (this.patientsList.containsKey(ssID)) {
-            resultat = this.patientsList.get(ssID);
-        }
-        return resultat;
-    }
-
-    /**
-     * Find Patient by starting Name.
-     * @param nom String
-     * @return List Patient
-     */
-    public List<Patient> findPatientByName(final String nom) {
-        List<Patient> resultat = new ArrayList<Patient>();
-        for (Patient p : this.patientsList.values()) {
-            if (p.getName().startsWith(nom)) {
-                resultat.add(p);
-            }
-        }
-        return resultat;
-    }
-
-    /**
-     * Find Patient by a Prescription (keyword or part of it).
-     * @param prescription String
-     * @return List Patient
-     */
-    public List<Patient> findPatientsByPrescription(final String prescription) {
-        List<Patient> resultat = new ArrayList<Patient>();
-        for (Patient p : this.patientsList.values()) {
-            for (Prescription e : p.getPrescriptions()) {
-                if (e.getContent().contains(prescription)) {
-                    resultat.add(p);
-                    break;
-                }
-            }
-        }
-        return resultat;
-    }
-
-    /**
      * Ajout d'un object d'écoute sur MES.
      * @param name
      * @param l

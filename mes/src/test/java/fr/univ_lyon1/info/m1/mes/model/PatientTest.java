@@ -11,6 +11,39 @@ import org.junit.jupiter.api.Test;
 import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
 
 public class PatientTest {
+    @Test
+    void constructorTest() {
+        // Given
+        Patient patient = new Patient();
+        // Test instance
+        assertThat(patient, hasProperty("name", equalTo(null)));
+    }
+
+    @Test
+    void setNameTest() {
+        // Given
+        Patient patient = new Patient();
+        patient.setName("Patient Test");
+
+        // When
+        String name = patient.getName();
+
+        // Then
+        assertThat(name, is("Patient Test"));
+    }
+
+    @Test
+    void setSsidTest() {
+        // Given
+        Patient patient = new Patient();
+        patient.setSsid("1234567890");
+
+        // When
+        String ssid = patient.getSsid();
+
+        // Then
+        assertThat(ssid, is("1234567890"));
+    }
     
     @Test
     void addPrescriptionTest() {
@@ -153,11 +186,16 @@ public class PatientTest {
 
     @Test
     void addPropertyChangeListenerTest() {
+        // Given
+        Patient p = new Patient("Alice", "20123456789012");
 
-    }
-
-    @Test
-    void removePropertyChangeListenerTest() {
-
+        // When
+        p.addPropertyChangeListener("prescription", (evt) -> {
+            assertThat(evt.getPropertyName(), is("prescription"));
+            // Verification dernier ajout
+            List<Prescription> pP = (List<Prescription>) evt.getNewValue();
+            assertThat(((Prescription) pP.get(pP.size() - 1)).getContent(), is("Paracetamol"));
+        });
+        p.addPrescription(new Prescription(null, "Paracetamol"));
     }
 }

@@ -10,6 +10,7 @@ import fr.univ_lyon1.info.m1.mes.model.MES;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
 import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
+import fr.univ_lyon1.info.m1.mes.view.PatientView;
 
 public class PatientControllerTest {
 
@@ -25,9 +26,14 @@ public class PatientControllerTest {
         // Given
         MES model = MES.getInstance();
         PatientController patientController = new PatientController(model);
+
         Patient patient = new Patient("test", "1234");
         HealthProfessional d = HealthProfessionalFactory.createHealthProfessional(HealthProfessionalType.DENTIST, "test");
         Prescription prescription = new Prescription(d, "test");
+
+        PatientView patientView = new PatientView(patientController);
+        patientController.setView(patientView);
+
         model.addHealthProfessional(d);
         model.addPatient(patient);
         patient.addPrescription(prescription);

@@ -15,6 +15,7 @@ import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
 import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
 import fr.univ_lyon1.info.m1.mes.types.PatientSearchStrategyType;
+import fr.univ_lyon1.info.m1.mes.view.HealthProfessionalView;
 
 public class HealthProfessionalControllerTest {
     @BeforeAll
@@ -82,6 +83,8 @@ public class HealthProfessionalControllerTest {
         Patient patient = new Patient("testProControllerPatient1", "4111");
         HealthProfessional d = HealthProfessionalFactory.createHealthProfessional(HealthProfessionalType.DENTIST, "testProControllerHP1");
         Prescription p = new Prescription(d, "testProControllerPrescription1");
+        HealthProfessionalView healthProfessionalView = new HealthProfessionalView(healthProfessionalController);
+        healthProfessionalController.setView(healthProfessionalView);
 
         model.addHealthProfessional(d);
         model.addPatient(patient);
@@ -103,6 +106,8 @@ public class HealthProfessionalControllerTest {
 
         Patient patient = new Patient("testProControllerPatient2", "4112");
         HealthProfessional d = HealthProfessionalFactory.createHealthProfessional(HealthProfessionalType.DENTIST, "testProControllerHP2");
+        HealthProfessionalView healthProfessionalView = new HealthProfessionalView(healthProfessionalController);
+        healthProfessionalController.setView(healthProfessionalView);
 
         model.addHealthProfessional(d);
         model.addPatient(patient);

@@ -1,15 +1,11 @@
 package fr.univ_lyon1.info.m1.mes.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.InputStream;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
-import org.yaml.snakeyaml.Yaml;
 
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 
@@ -41,5 +37,4 @@ public class healthProfessionalDaoTest {
         assertTrue(p instanceof HealthProfessional);
         assertEquals("Dr. Who", p.getName());
     }
-
 }

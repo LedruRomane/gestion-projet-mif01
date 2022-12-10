@@ -5,7 +5,7 @@ import java.util.List;
 
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 
-public class Name extends BaseStrategy {
+public class Name implements BaseStrategy {
     public Name() {
         super();
     }

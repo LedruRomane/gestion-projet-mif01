@@ -6,7 +6,7 @@ import java.util.List;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.Prescription;
 
-public class Prescriptions extends BaseStrategy {
+public class Prescriptions implements BaseStrategy {
     public Prescriptions() {
         super();
     }

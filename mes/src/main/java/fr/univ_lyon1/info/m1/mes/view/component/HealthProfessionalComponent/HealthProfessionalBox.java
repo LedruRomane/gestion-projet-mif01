@@ -131,7 +131,6 @@ public class HealthProfessionalBox implements PropertyChangeListener {
                         EasyAlert.alert("Erreur!", "Veuillez remplir tout les champs!");
                         return;
                     }
-                    // TODO: Better
                     List<Patient> list = controller.getPatients(
                         searchComboBox.getValue(),
                         searchTextField.getText());

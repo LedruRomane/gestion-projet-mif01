@@ -12,13 +12,20 @@ import fr.univ_lyon1.info.m1.mes.types.HealthProfessionalType;
 
 public class HealthProfessionalDao extends Dao<HealthProfessional> {
 
+    /**
+     * Find one HealthProfessional.
+     * @return one HealthProfessional
+     */
     public HealthProfessional find(final String id) {
         Map<String, HealthProfessional> map = this.findAllHealthProfessional();
         HealthProfessional p = map.get(id);
         return p;
     }
 
-    
+    /**
+     * load all HealthProfessional.
+     * @return Map HealthProfessional
+     */
     public Map<String, HealthProfessional> findAllHealthProfessional() {
 
         final Yaml yaml = new Yaml();

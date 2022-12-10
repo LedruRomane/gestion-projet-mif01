@@ -3,11 +3,7 @@ package fr.univ_lyon1.info.m1.mes.controller;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import javafx.application.Platform;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessionalFactory;
 import fr.univ_lyon1.info.m1.mes.model.MES;

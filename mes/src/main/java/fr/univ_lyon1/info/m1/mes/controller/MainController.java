@@ -7,25 +7,13 @@ import fr.univ_lyon1.info.m1.mes.dao.PrescriptionDao;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.model.MES;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
-import fr.univ_lyon1.info.m1.mes.view.MainView;
-import javafx.stage.Stage;
 
 public class MainController {
     private final MES model;
-    private final HealthProfessionalController healthController;
-    private final PatientController patientController;
 
     public MainController(final MES mes) {
         this.model = mes;
         createExampleConfiguration();
-        
-        this.healthController = new HealthProfessionalController(this.model);
-        this.patientController = new PatientController(this.model);
-        
-        new MainView(new Stage(),
-                this, this.healthController.getView(),
-                this.patientController.getView(),
-                1000, 600);
     }
     
     /**

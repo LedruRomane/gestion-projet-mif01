@@ -6,7 +6,6 @@ import java.net.URL;
 import java.util.List;
 
 import fr.univ_lyon1.info.m1.mes.controller.PatientController;
-import fr.univ_lyon1.info.m1.mes.model.MES;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.view.component.PatientComponent.PatientBox;
 import fr.univ_lyon1.info.m1.mes.view.component.PatientComponent.PatientSelect;
@@ -22,14 +21,13 @@ public class PatientView implements PropertyChangeListener {
     /**
      * Constructor PatientView.
      * @param patientController PatientController
-     * @param mes MES
      */
-    public PatientView(final PatientController patientController, final MES mes) {
+    public PatientView(final PatientController patientController) {
 
         this.controller = patientController;
         this.patientBox = new PatientBox(controller, null);
         this.patientSelect = new PatientSelect(controller);
-        this.patientSelect.updatePatient(mes.getPatients());
+        this.patientSelect.updatePatient(controller.getPatients());
 
         loadCss();
         this.pane.getItems().addAll(patientBox.asPane(), patientSelect.asPane());

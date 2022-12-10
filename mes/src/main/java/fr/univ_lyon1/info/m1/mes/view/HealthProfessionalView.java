@@ -6,7 +6,6 @@ import java.net.URL;
 import java.util.List;
 
 import fr.univ_lyon1.info.m1.mes.controller.HealthProfessionalController;
-import fr.univ_lyon1.info.m1.mes.model.MES;
 import fr.univ_lyon1.info.m1.mes.model.Patient;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.view.component.HealthProfessionalComponent.HealthProfessionalBox;
@@ -23,17 +22,15 @@ public class HealthProfessionalView implements PropertyChangeListener {
     /**
      * Constructor HealthProfessionalView.
      * @param healthProfessionalController HealthProfessionalController
-     * @param mes MES
      */
     public HealthProfessionalView(
-            final HealthProfessionalController healthProfessionalController,
-            final MES mes) {
+            final HealthProfessionalController healthProfessionalController) {
         
         this.controller = healthProfessionalController;
         this.healthProfessionalBox = new HealthProfessionalBox(healthProfessionalController, null);
         this.healthProfessionalSelect = new HealthProfessionalSelect(healthProfessionalController);
         this.healthProfessionalSelect.updateHealthProfessional(
-                mes.getHealthProfessionals());
+                controller.getHealthProfessionals());
                
         loadCss();
         this.pane.getItems().addAll(

@@ -18,7 +18,7 @@ public class HealthProfessionalController {
      * Attributes.
      */
     private final MES model;
-    private final HealthProfessionalView view;
+    private HealthProfessionalView view;
     private HealthProfessional currentPro;
     private Patient currentPatient;
 
@@ -32,7 +32,11 @@ public class HealthProfessionalController {
         this.currentPro = null;
         this.currentPatient = null;
         this.model = mes;
-        this.view = new HealthProfessionalView(this, this.model);
+        this.view = null;
+    }
+
+    public void setView(final HealthProfessionalView view) {
+        this.view = view;
         this.model.addPropertyChangeListener("healthList", this.view);
     }
 
@@ -97,6 +101,10 @@ public class HealthProfessionalController {
             resultat.add(patient);
         });
         return resultat;
+    }
+
+    public List<HealthProfessional> getHealthProfessionals() {
+        return this.model.getHealthProfessionals();
     }
 
     /**

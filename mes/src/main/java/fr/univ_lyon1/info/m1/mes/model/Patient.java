@@ -14,16 +14,19 @@ public class Patient {
 
     /**
      * Patient Constructor.
-     * @param name
-     * @param ssid
+     * @param name String
+     * @param ssid String
      */
     public Patient(final String name, final String ssid) {
         this.name = name;
         this.ssid = ssid;
     }
 
+    /**
+     * Default Constructor.
+     */
     public Patient() {
-
+        
     }
 
     /**

@@ -52,7 +52,7 @@ public final class MES {
     /**
      * Add a new patient to MES.
      * 
-     * @param p
+     * @param p Patient
      * @return boolean
      */
     public boolean addPatient(final Patient p) {
@@ -67,7 +67,7 @@ public final class MES {
     /**
      * Add a new health professional to MES.
      * 
-     * @param hp
+     * @param hp HealthProfessional
      * @return boolean
      */
     public boolean addHealthProfessional(final HealthProfessional hp) {
@@ -81,8 +81,8 @@ public final class MES {
 
     /**
      * Ajout d'un object d'écoute sur MES.
-     * @param name
-     * @param l
+     * @param name String
+     * @param l PropertyChangeListener
      */
     public void addPropertyChangeListener(final String name, final PropertyChangeListener l) {
         changes.addPropertyChangeListener(name, l);

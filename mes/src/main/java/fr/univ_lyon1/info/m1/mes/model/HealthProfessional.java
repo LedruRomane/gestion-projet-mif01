@@ -4,6 +4,9 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
+/**
+ * HealthProfessional class.
+ */
 public class HealthProfessional {
     private static Integer idCounter = 0;
     /*
@@ -14,11 +17,9 @@ public class HealthProfessional {
     private final ArrayList<Prescription> prefPrescriptions = new ArrayList<>();
     private final Integer id;
 
-    /*
-     * Constructor
-     * 
-     * @param name
-     * @param id
+    /**
+     * Constructor.
+     * @param name String
      */
     public HealthProfessional(final String name) {
         this.name = name;
@@ -34,6 +35,7 @@ public class HealthProfessional {
     }
 
     /**
+     * Return HealthProfessional ID.
      * @return Integer
      */
     public Integer getId() {
@@ -41,7 +43,8 @@ public class HealthProfessional {
     }
 
     /**
-     * @return ArrayList<Prescription>
+     * Return all Pref Prescriptions.
+     * @return ArrayList Prescription
      */
     public ArrayList<Prescription> getPrefPrescription() {
         return this.prefPrescriptions;

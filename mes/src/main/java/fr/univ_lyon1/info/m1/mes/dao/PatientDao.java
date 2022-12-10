@@ -10,12 +10,21 @@ import fr.univ_lyon1.info.m1.mes.model.Patient;
 
 public class PatientDao extends Dao<Patient> {
 
+    /**
+     * Default find one Patient.
+     * @param id String
+     * @return Patient
+     */
     public Patient find(final String id) {
         Map<String, Patient> map = this.findAllPatients();
         Patient p = map.get(id);
         return p;
     }
 
+    /**
+     * charge all Patient from yaml files.
+     * @return Map of Patients
+     */
     public Map<String, Patient> findAllPatients() {
         final Yaml yaml = new Yaml();
         final InputStream inputStream = this.getClass()

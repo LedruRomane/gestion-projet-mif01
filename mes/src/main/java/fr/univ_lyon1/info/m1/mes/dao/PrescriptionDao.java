@@ -12,11 +12,21 @@ import fr.univ_lyon1.info.m1.mes.model.Prescription;
 
 public class PrescriptionDao extends Dao<Prescription> {
 
+    /**
+     * Find one prescription.
+     * @return one Presription
+     */
     public Prescription find(final String id) {
         //useless
         return new Prescription(null, id);
     }
 
+    /**
+     * load all Prescriptions.
+     * @param mapHp Map HealthProfessional
+     * @param mapPatient Map Patient
+     * @return Map Presriptions
+     */
     public Map<String, Prescription> findAllPrescription(
         final Map<String, HealthProfessional> mapHp,
         final Map<String, Patient> mapPatient) {

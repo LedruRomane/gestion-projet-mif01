@@ -6,7 +6,8 @@ public interface HealthProfessionalFactory {
     /**
      * Create a new Health Professional and return it.
      * 
-     * @param name
+     * @param name String
+     * @param model HealthProfessionalType
      * @return HealthProfessional
      */
     static HealthProfessional createHealthProfessional(

@@ -4,10 +4,8 @@ package fr.univ_lyon1.info.m1.mes.controller;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import javafx.application.Platform;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessional;
 import fr.univ_lyon1.info.m1.mes.model.HealthProfessionalFactory;
 import fr.univ_lyon1.info.m1.mes.model.MES;
@@ -18,20 +16,26 @@ import fr.univ_lyon1.info.m1.mes.types.PatientSearchStrategyType;
 import fr.univ_lyon1.info.m1.mes.view.HealthProfessionalView;
 
 public class HealthProfessionalControllerTest {
-    @BeforeAll
-    public static void setUp() {
-        Platform.startup(() -> {});
-    }
 
     @Test
-    public void instantiateHealthProfessionalController() throws Exception {
+    public void instantiateHealthProfessionalControllerTest() throws Exception {
         MES model = MES.getInstance();
         HealthProfessionalController healthProfessionalController = new HealthProfessionalController(model);
         assertThat(healthProfessionalController, is(healthProfessionalController));
     }
 
     @Test
-    public void deletePrescriptionWithoutSelect() throws Exception {
+    public void getHealthProfessionalTest() throws Exception {
+        MES model = MES.getInstance();
+        HealthProfessionalController healthProfessionalController = new HealthProfessionalController(model);
+        HealthProfessional d = HealthProfessionalFactory.createHealthProfessional(HealthProfessionalType.DENTIST, "testProControllerHP0");
+        Integer size = model.getHealthProfessionals().size();
+        model.addHealthProfessional(d);
+        assertThat(healthProfessionalController.getHealthProfessionals().size(), is(size + 1));
+    }
+
+    @Test
+    public void deletePrescriptionWithoutSelectTest() throws Exception {
         // Given
         MES model = MES.getInstance();
         HealthProfessionalController healthProfessionalController = new HealthProfessionalController(model);
@@ -54,7 +58,7 @@ public class HealthProfessionalControllerTest {
     }
 
     @Test
-    public void addPrescriptionWithoutSelect() throws Exception {
+    public void addPrescriptionWithoutSelectTest() throws Exception {
         // Given
         MES model = MES.getInstance();
         HealthProfessionalController healthProfessionalController = new HealthProfessionalController(model);
@@ -75,7 +79,28 @@ public class HealthProfessionalControllerTest {
     }
 
     @Test
-    public void selectAndDeletePrescriptionHealthProfessional() throws Exception {
+    public void getPrescriptionsByPatientTest() throws Exception {
+        // Given
+        MES model = MES.getInstance();
+        HealthProfessionalController healthProfessionalController = new HealthProfessionalController(model);
+
+        Patient patient = new Patient("testProControllerPatient66", "41157");
+        HealthProfessional d = HealthProfessionalFactory.createHealthProfessional(HealthProfessionalType.DENTIST, "testProControllerHPZ");
+        Prescription p = new Prescription(d, "testProControllerPrescription1");
+
+        model.addHealthProfessional(d);
+        model.addPatient(patient);
+        patient.addPrescription(p);
+
+        // When
+        healthProfessionalController.selectHealthProfessional(d);
+
+        // Then
+        assertThat(healthProfessionalController.getPrescriptionsByPatient(patient).size(), is(1));
+    }
+
+    @Test
+    public void selectAndDeletePrescriptionHealthProfessionalTest() throws Exception {
         // Given
         MES model = MES.getInstance();
         HealthProfessionalController healthProfessionalController = new HealthProfessionalController(model);
@@ -83,8 +108,6 @@ public class HealthProfessionalControllerTest {
         Patient patient = new Patient("testProControllerPatient1", "4111");
         HealthProfessional d = HealthProfessionalFactory.createHealthProfessional(HealthProfessionalType.DENTIST, "testProControllerHP1");
         Prescription p = new Prescription(d, "testProControllerPrescription1");
-        HealthProfessionalView healthProfessionalView = new HealthProfessionalView(healthProfessionalController);
-        healthProfessionalController.setView(healthProfessionalView);
 
         model.addHealthProfessional(d);
         model.addPatient(patient);
@@ -99,15 +122,13 @@ public class HealthProfessionalControllerTest {
     }
 
     @Test
-    public void selectAndAddPrescriptionHealthProfessional() throws Exception {
+    public void selectAndAddPrescriptionHealthProfessionalTest() throws Exception {
         // Given
         MES model = MES.getInstance();
         HealthProfessionalController healthProfessionalController = new HealthProfessionalController(model);
 
         Patient patient = new Patient("testProControllerPatient2", "4112");
         HealthProfessional d = HealthProfessionalFactory.createHealthProfessional(HealthProfessionalType.DENTIST, "testProControllerHP2");
-        HealthProfessionalView healthProfessionalView = new HealthProfessionalView(healthProfessionalController);
-        healthProfessionalController.setView(healthProfessionalView);
 
         model.addHealthProfessional(d);
         model.addPatient(patient);
@@ -122,7 +143,7 @@ public class HealthProfessionalControllerTest {
     }
 
     @Test
-    public void getPatients() throws Exception {
+    public void getPatientsTest() throws Exception {
         // Given
         MES model = MES.getInstance();
         HealthProfessionalController healthProfessionalController = new HealthProfessionalController(model);
@@ -137,7 +158,7 @@ public class HealthProfessionalControllerTest {
     }
 
     @Test
-    public void createHealthProfessional() throws Exception {
+    public void createHealthProfessionalTest() throws Exception {
         // Given
         MES model = MES.getInstance();
         HealthProfessionalController healthProfessionalController = new HealthProfessionalController(model);

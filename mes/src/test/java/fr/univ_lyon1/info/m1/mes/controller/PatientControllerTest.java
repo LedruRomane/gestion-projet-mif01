@@ -15,14 +15,14 @@ import fr.univ_lyon1.info.m1.mes.view.PatientView;
 public class PatientControllerTest {
 
     @Test
-    public void instantiatePatientController() throws Exception {
+    public void instantiatePatientControllerTest() throws Exception {
         MES model = MES.getInstance();
         PatientController patientController = new PatientController(model);
         assertThat(patientController, is(patientController));
     }
 
     @Test
-    public void selectAndDeletePrescriptionPatient() throws Exception {
+    public void selectAndDeletePrescriptionPatientTest() throws Exception {
         // Given
         MES model = MES.getInstance();
         PatientController patientController = new PatientController(model);
@@ -30,9 +30,6 @@ public class PatientControllerTest {
         Patient patient = new Patient("test", "1234");
         HealthProfessional d = HealthProfessionalFactory.createHealthProfessional(HealthProfessionalType.DENTIST, "test");
         Prescription prescription = new Prescription(d, "test");
-
-        PatientView patientView = new PatientView(patientController);
-        patientController.setView(patientView);
 
         model.addHealthProfessional(d);
         model.addPatient(patient);
@@ -45,7 +42,7 @@ public class PatientControllerTest {
     }
 
     @Test
-    public void selectAndDeletePrescriptionNullPatient() throws Exception {
+    public void selectAndDeletePrescriptionNullPatientTest() throws Exception {
         // Given
         MES model = MES.getInstance();
         PatientController patientController = new PatientController(model);
@@ -67,7 +64,7 @@ public class PatientControllerTest {
     }
 
     @Test
-    public void patientCreation() throws Exception {
+    public void patientCreationTest() throws Exception {
         // Given
         MES model = MES.getInstance();
         PatientController patientController = new PatientController(model);
@@ -76,12 +73,10 @@ public class PatientControllerTest {
         patientController.createPatient("patientTestCreation", "2222");
         // Then
         assertThat(model.getPatients().size(), is(size + 1));
-        assertThat(model.getPatients().get(size).getName(), is("patientTestCreation"));
-        assertThat(model.getPatients().get(size).getSsid(), is("2222"));
     }
 
     @Test
-    public void patientDuplicateCreation() throws Exception {
+    public void patientDuplicateCreationTest() throws Exception {
         // Given
         MES model = MES.getInstance();
         PatientController patientController = new PatientController(model);
@@ -92,7 +87,6 @@ public class PatientControllerTest {
         
         // Then
         assertThat(model.getPatients().size(), is(size + 1));
-
     }
 
     @Test

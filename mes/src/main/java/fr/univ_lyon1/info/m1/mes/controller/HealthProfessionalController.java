@@ -48,10 +48,12 @@ public class HealthProfessionalController {
         }
         this.currentPro = pro;
         this.currentPatient = null; // Suppression du choix d'utilisateur
+        if (this.view != null) {
         this.view.selectHealthProfessionnal(pro);
+        }
         this.currentPro.addPropertyChangeListener(
             "prescription", 
-            this.view.getHealthProfessionalBox());
+            (this.view) != null ? this.view.getHealthProfessionalBox() : null);
     }
 
     /**
@@ -63,10 +65,12 @@ public class HealthProfessionalController {
             return; 
         }
         this.currentPatient = patient;
-        this.view.selectPatient(patient);
+        if (this.view != null) {
+            this.view.selectPatient(patient);
+        }
         this.currentPatient.addPropertyChangeListener(
             "prescription", 
-            this.view.getHealthProfessionalBox());
+           (this.view) != null ?  this.view.getHealthProfessionalBox() : null);
     }
 
     /**

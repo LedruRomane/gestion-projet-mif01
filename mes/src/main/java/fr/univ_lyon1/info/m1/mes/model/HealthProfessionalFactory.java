@@ -6,11 +6,15 @@ public interface HealthProfessionalFactory {
     /**
      * Create a new Health Professional and return it.
      * 
-     * @param name
+     * @param name String
+     * @param model HealthProfessionalType
      * @return HealthProfessional
      */
     static HealthProfessional createHealthProfessional(
             final HealthProfessionalType model, final String name) {
+        if (model == null) {
+            throw new NullPointerException("HealthProfessionalType is null");
+        }
         HealthProfessional p = null;
         switch (model) {
             case PEDIATRICIAN:
@@ -29,7 +33,7 @@ public interface HealthProfessionalFactory {
                 p = new Pulmonologist(name);
                 break;
             default:
-                throw new Error("Unknown professional type");
+                break;
         }
         return p;
     };

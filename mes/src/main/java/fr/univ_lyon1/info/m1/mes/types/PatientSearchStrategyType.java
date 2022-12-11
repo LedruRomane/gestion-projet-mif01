@@ -10,14 +10,14 @@ public enum PatientSearchStrategyType {
     SSID("fr.univ_lyon1.info.m1.mes.controller.patientSearch.Ssid"),
     PRESCRIPTIONS("fr.univ_lyon1.info.m1.mes.controller.patientSearch.Prescriptions");
 
-    private BaseStrategy c;
+    private BaseStrategy baseStrategy;
 
     PatientSearchStrategyType(final String strategyName) {
         try {
             Class<?> clazz = Class.forName(strategyName);
             Constructor<?> constructor = clazz.getConstructor();
             Object instance = constructor.newInstance();
-            c = (BaseStrategy) instance;
+            baseStrategy = (BaseStrategy) instance;
         } catch (InstantiationException | IllegalAccessException 
         | ClassNotFoundException | NoSuchMethodException 
         | SecurityException | IllegalArgumentException | InvocationTargetException e) {
@@ -25,11 +25,19 @@ public enum PatientSearchStrategyType {
         }
     }
 
+    /**
+     * Return the strategy class.
+     * @return BaseStrategy
+     */
     public BaseStrategy getStrategyClass() {
-        return c;
+        return baseStrategy;
     }
 
+    /**
+     * Return the String of the strategy.
+     * @return String
+     */
     public String toString() {
-        return c.toString();
+        return baseStrategy.toString();
     }
 }

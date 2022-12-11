@@ -146,7 +146,7 @@ public class PatientSelect {
 
     /**
      * Update Patient when a Patient is added.
-     * @param patientList List<Patient>
+     * @param patientList List Patient
      */
     public void updatePatient(final List<Patient> patientList) {
         Patient oldPatient = this.patientComboBox.getSelectionModel().getSelectedItem();

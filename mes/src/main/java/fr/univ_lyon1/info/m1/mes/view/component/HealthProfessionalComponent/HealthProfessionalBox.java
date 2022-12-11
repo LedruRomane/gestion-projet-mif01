@@ -31,9 +31,6 @@ import javafx.scene.control.ScrollPane;
 
 public class HealthProfessionalBox implements PropertyChangeListener {
 
-    /**
-     * Attributes.
-     */
     private final HealthProfessionalController controller;
     private HealthProfessional professional;
     private Patient currentPatient;
@@ -155,7 +152,7 @@ public class HealthProfessionalBox implements PropertyChangeListener {
 
      /**
      * Set new HealthProfessional select.
-     * @param hp HealthProfessional.
+     * @param hp HealthProfessional
      */
     public void setHealthProfessional(final HealthProfessional hp) {
         this.professional = hp;
@@ -167,6 +164,7 @@ public class HealthProfessionalBox implements PropertyChangeListener {
 
     /**
      * Show PatientPrescription when 1 Patient are load.
+     * @param patient Patient
      */
     private void showPatientPrescription(final Patient patient) {
         this.prescriptionPane.getChildren().setAll();
@@ -200,7 +198,7 @@ public class HealthProfessionalBox implements PropertyChangeListener {
 
     /**
      * Show comboBox selection if multiple patient choice with search.
-     * @param list List<Patient>
+     * @param list List Patient
      */
     private void showMultiplePatientChoice(final List<Patient> list) {
         final Label multipleChoice = new Label(
@@ -233,7 +231,7 @@ public class HealthProfessionalBox implements PropertyChangeListener {
 
     /**
      * Update comboBox patient in HealthProfessionalBox View.
-     * @param patientList List<Patient>
+     * @param patientList List Patient
      */
     public void updatePatient(final List<Patient> patientList) {
         Patient oldPatient = this.patientComboBox.getSelectionModel().getSelectedItem();
@@ -259,7 +257,7 @@ public class HealthProfessionalBox implements PropertyChangeListener {
 
     /**
      * Set and display patient when selected.
-     * @param p Patient.
+     * @param p Patient
      */
     public void setPatient(final Patient p) {
         this.currentPatient = p;
@@ -270,7 +268,7 @@ public class HealthProfessionalBox implements PropertyChangeListener {
 
     /**
      * Return HealthProfessionalBox Pane.
-     * @return Pane.
+     * @return Pane
      */
     public Pane asPane() {
         return this.healthProfessionalPane;

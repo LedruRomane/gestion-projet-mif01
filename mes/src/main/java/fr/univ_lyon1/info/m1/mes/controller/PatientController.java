@@ -37,8 +37,11 @@ public class PatientController {
             return; 
         }
         this.currentPatient = patient;
-        this.view.selectPatient(patient);
-        this.currentPatient.addPropertyChangeListener("prescription", this.view.getPatientBox());
+        if (this.view != null) {
+            this.view.selectPatient(patient);
+        }
+        this.currentPatient.addPropertyChangeListener("prescription", 
+        (this.view != null) ? this.view.getPatientBox() : null);
     }
 
     public List<Patient> getPatients() {

@@ -156,7 +156,7 @@ public class HealthProfessionalSelect {
 
     /**
      * update HealthProfessional comboBox.
-     * @param proList List<HealthProfessional>
+     * @param proList List HealthProfessional
      */
     public void updateHealthProfessional(final List<HealthProfessional> proList) {
         HealthProfessional oldPro = this.healthProComboBox.getSelectionModel().getSelectedItem();
@@ -169,7 +169,7 @@ public class HealthProfessionalSelect {
 
     /**
      * Return Pane healthProfessionalSelectBox.
-     * @return this Pane.
+     * @return this Pane
      */
     public Pane asPane() {
         return this.healthProSelectBox;

@@ -10,9 +10,6 @@ import java.util.Map;
 
 public final class MES {
 
-    /**
-     * Attributes.
-     */
     private PropertyChangeSupport changes = new PropertyChangeSupport(this);
     private final List<HealthProfessional> healthProfessionalsList = new ArrayList<>();
     private final Map<String, Patient> patientsList = new HashMap<>();
@@ -38,8 +35,7 @@ public final class MES {
 
     /**
      * Return HealthProfessionals list within MES.
-     * 
-     * @return List<HealthProfessional>
+     * @return List HealthProfessional
      */
     public List<HealthProfessional> getHealthProfessionals() {
         return healthProfessionalsList;
@@ -47,8 +43,7 @@ public final class MES {
 
     /**
      * Return patients list within MES.
-     * 
-     * @return List<Patient>
+     * @return List Patient
      */
     public List<Patient> getPatients() {
         return new ArrayList<>(patientsList.values());
@@ -57,7 +52,7 @@ public final class MES {
     /**
      * Add a new patient to MES.
      * 
-     * @param p
+     * @param p Patient
      * @return boolean
      */
     public boolean addPatient(final Patient p) {
@@ -72,7 +67,7 @@ public final class MES {
     /**
      * Add a new health professional to MES.
      * 
-     * @param hp
+     * @param hp HealthProfessional
      * @return boolean
      */
     public boolean addHealthProfessional(final HealthProfessional hp) {
@@ -85,64 +80,18 @@ public final class MES {
     }
 
     /**
-     * Find Patient by SSID.
-     * @param ssID
-     * @return 1 Patient or null.
-     */
-    public Patient findPatientBySSID(final String ssID) {
-        Patient resultat = null;
-        if (this.patientsList.containsKey(ssID)) {
-            resultat = this.patientsList.get(ssID);
-        }
-        return resultat;
-    }
-
-    /**
-     * Find Patient by starting Name.
-     * @param nom
-     * @return List<Patient>.
-     */
-    public List<Patient> findPatientByName(final String nom) {
-        List<Patient> resultat = new ArrayList<Patient>();
-        for (Patient p : this.patientsList.values()) {
-            if (p.getName().startsWith(nom)) {
-                resultat.add(p);
-            }
-        }
-        return resultat;
-    }
-
-    /**
-     * Find Patient by a Prescription (keyword or part of it).
-     * @param prescription
-     * @return List<Patient>.
-     */
-    public List<Patient> findPatientsByPrescription(final String prescription) {
-        List<Patient> resultat = new ArrayList<Patient>();
-        for (Patient p : this.patientsList.values()) {
-            for (Prescription e : p.getPrescriptions()) {
-                if (e.getContent().contains(prescription)) {
-                    resultat.add(p);
-                    break;
-                }
-            }
-        }
-        return resultat;
-    }
-
-    /**
      * Ajout d'un object d'écoute sur MES.
-     * @param name
-     * @param l
+     * @param name String
+     * @param l PropertyChangeListener
      */
     public void addPropertyChangeListener(final String name, final PropertyChangeListener l) {
         changes.addPropertyChangeListener(name, l);
     }
 
     /**
-     * Suppression d'un object d'écoute sur MES.
-     * @param name
-     * @param l
+     * Delete object's listenner on MES.
+     * @param name String
+     * @param l PropertyChangeListener
      */
     public void removePropertyChangeListener(final String name, final PropertyChangeListener l) {
         changes.removePropertyChangeListener(name, l);

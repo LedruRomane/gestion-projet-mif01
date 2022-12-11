@@ -14,9 +14,6 @@ import fr.univ_lyon1.info.m1.mes.view.HealthProfessionalView;
 
 public class HealthProfessionalController {
 
-    /**
-     * Attributes.
-     */
     private final MES model;
     private HealthProfessionalView view;
     private HealthProfessional currentPro;
@@ -43,7 +40,7 @@ public class HealthProfessionalController {
     /**
      * Méthode qui gère la selection d'un healthpro dans la combobox, 
      * le charge et l'affiche sur la bonne vue.
-     * @param pro
+     * @param pro HealthProfessional
      */
     public void selectHealthProfessional(final HealthProfessional pro) {
         if (pro == null) { 
@@ -51,32 +48,36 @@ public class HealthProfessionalController {
         }
         this.currentPro = pro;
         this.currentPatient = null; // Suppression du choix d'utilisateur
+        if (this.view != null) {
         this.view.selectHealthProfessionnal(pro);
+        }
         this.currentPro.addPropertyChangeListener(
             "prescription", 
-            this.view.getHealthProfessionalBox());
+            (this.view) != null ? this.view.getHealthProfessionalBox() : null);
     }
 
     /**
      * Gère la selection d'un patient dans la combobox multiplechoice.
-     * @param pro
+     * @param patient Patient
      */
-    public void selectPatient(final Patient pro) {
-        if (pro == null) { 
+    public void selectPatient(final Patient patient) {
+        if (patient == null) { 
             return; 
         }
-        this.currentPatient = pro;
-        this.view.selectPatient(pro);
+        this.currentPatient = patient;
+        if (this.view != null) {
+            this.view.selectPatient(patient);
+        }
         this.currentPatient.addPropertyChangeListener(
             "prescription", 
-            this.view.getHealthProfessionalBox());
+           (this.view) != null ?  this.view.getHealthProfessionalBox() : null);
     }
 
     /**
-     * Méthode qui permet la création d'un healthPro.
-     * @param model type du healthPro.
-     * @param name nom du healthPro.
-     * @return l'objet de type HealthProfessional crée.
+     * Create a HealthProfessional.
+     * @param model HealthProfessionalType
+     * @param name String
+     * @return HealthProfessional
      */
     public HealthProfessional createHealthProfessional(
             final HealthProfessionalType model,
@@ -90,9 +91,9 @@ public class HealthProfessionalController {
 
     /**
      * Méthode qui gère les différents type de recherches des patients sur la vue healthPro.
-     * @param politique Type de recherche choisi.
-     * @param valeur Valeur de la recherche tapée par l'utilisateur.
-     * @return List<Patient> La liste d'un ou des patients correspondants à la recherche.
+     * @param politique String
+     * @param valeur String
+     * @return List Patient
      */
     public List<Patient> getPatients(
         final PatientSearchStrategyType politique, final String valeur) {
@@ -109,8 +110,8 @@ public class HealthProfessionalController {
 
     /**
      * Return patient's list of prescription for the current healthpro.
-     * @param patient
-     * @return List<Prescription>.
+     * @param patient Patient
+     * @return List Prescription
      */
     public List<Prescription> getPrescriptionsByPatient(final Patient patient) {
         List<Prescription> resultat = new ArrayList<Prescription>();
@@ -123,8 +124,8 @@ public class HealthProfessionalController {
     }
 
     /**
-     * Suppression d'une prescription d'un utilisateur.
-     * @param p
+     * Delete Prescription from current Patient.
+     * @param p Prescription
      */
     public void deletePrescription(final Prescription p) {
         if (this.currentPatient == null) { 
@@ -133,17 +134,22 @@ public class HealthProfessionalController {
         this.currentPatient.removePrescription(p);
     }
 
-    public Prescription addPrescription(final String p) {
+    /**
+     * Add a prescription to current patient.
+     * @param prescription String
+     * @return Prescription
+     */
+    public Prescription addPrescription(final String prescription) {
         if (this.currentPatient == null) { 
             throw new Error("Missing selected patient"); 
         }
-        Prescription newPresc = new Prescription(currentPro, p);
+        Prescription newPresc = new Prescription(currentPro, prescription);
         this.currentPatient.addPrescription(newPresc);
         return newPresc;
     }
 
     /**
-     * Retourne la main vue du controlleur.
+     * Return main view.
      * @return HealthProfessionalView.
      */
     public HealthProfessionalView getView() {
